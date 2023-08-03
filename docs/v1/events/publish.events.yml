@@ -1,0 +1,93 @@
+leaveParty:
+  description: Leave the room associated to the party and disconnects the socket connection
+  name: leaveParty
+  payload:
+    type: string
+    description: Party code
+play:
+  description: Resume the currently playing song
+  name: play
+pause:
+  description: Pause the currently playing song
+  name: pause
+next:
+  description: Play the next song in the queue
+  name: next
+previous:
+  description: Play the previous song in the queue
+  name: previous
+querySong:
+  description: Add a song to the queue
+  name: querySong
+  payload:
+    type: string
+    description: query
+songChanged:
+  description: Notify the server that the currently playing song has changed
+  name: songChanged
+  payload:
+    $ref: ../schemas.yml#/currentSongSchema
+paused:
+  description: Notify the server that the currently playing song was paused or resumed
+  name: paused
+  payload:
+    type: boolean
+    description: flag
+currentSong:
+  description: Get current song playing
+  name: currentSong
+  x-ack:
+    args:
+      type: object
+      properties:
+        status:
+          type: number
+        currentSong:
+          nullable: true
+          $ref: ../schemas.yml#/currentSongSchema
+getQueue:
+  description: Get queue
+  name: getQueue
+  x-ack:
+    args:
+      type: object
+      properties:
+        status:
+          type: number
+        previousQueue:
+          type: array
+          Description: JSON strings with the following schemas
+          items:
+            $ref: ../schemas.yml#/resultItemSchema
+        nextQueue:
+          type: array
+          items:
+            $ref: ../schemas.yml#/resultItemSchema
+getUsersList:
+  description: Get the party users list
+  name: getUsersList
+  x-ack:
+    args:
+      type: object
+      properties:
+        status:
+          type: number
+        usersList:
+          nullable: true
+          type: array
+          items:
+            type: object
+            properties:
+              username:
+                type: string
+              displayName:
+                type: string
+              roleId:
+                type: number
+                nullable: true
+              photo:
+                type: string
+                nullable: true
+        message:
+          type: string
+          nullable: true

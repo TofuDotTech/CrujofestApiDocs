@@ -1,0 +1,43 @@
+pushSong:
+  name: pushSong
+  description: Notify client that a new song was pushed to the queue
+  payload:
+    $ref: ../schemas.yml#/resultItemSchema
+changeSong:
+  name: changeSong
+  description: Notify client to change currently playing song
+  payload:
+    oneOf:
+      - $ref: ../schemas.yml#/resultItemSchema
+      - type: string
+        description: value of null
+changePausedState:
+  name: changePausedState
+  description: Notify client that the currently playing song was paused or resumed
+  payload:
+    type: boolean
+    description: flag
+addUser:
+  name: addUser
+  description: Add user to party users list
+  payload:
+    type: object
+    properties:
+      username:
+        type: string
+      displayName:
+        type: string
+      roleId:
+        type: number
+      photo:
+        type: string
+        nullable: true
+deleteUser:
+  name: deleteUser
+  description: Delete user from party users list
+  payload:
+    type: string
+    description: username
+deleteParty:
+  name: deleteParty
+  description: Notify client that the party was deleted

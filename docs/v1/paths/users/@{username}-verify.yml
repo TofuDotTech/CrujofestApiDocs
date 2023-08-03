@@ -1,0 +1,14 @@
+parameters:
+  - $ref: "../../parameters.yml#/usernameParam"
+patch:
+  summary: Verifies user email
+  description: Verifies user email
+  tags:
+    - Users
+  responses:
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"

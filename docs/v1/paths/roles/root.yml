@@ -1,0 +1,32 @@
+description: Requires authentication
+get:
+  summary: Gets all roles available
+  description: Supports guest users. Gets all roles available
+  tags:
+    - Roles
+  security:
+    - BearerAuth: []
+  responses:
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: Success status
+              roles:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    roleId:
+                      type: number
+                    roleName:
+                      type: string
+    "403":
+      $ref: "../../responses.yml#/403"
+    "401":
+      $ref: "../../responses.yml#/401"

@@ -1,0 +1,43 @@
+post:
+  summary: Creates a new party
+  description: Creates a new party
+  tags:
+    - Parties
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Party name. Between 6-30 characters and no special characters
+            themeId:
+              type: number
+              description: Id from choosed theme
+  responses:
+    "209":
+      description: User is already in a party
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "204":
+      description: User is not connected to spotify
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "403":
+      $ref: "../../responses.yml#/403"
+    "401":
+      $ref: "../../responses.yml#/401"

@@ -1,0 +1,15 @@
+openapi: "3.0.3"
+info:
+  title: Crujofest API
+  version: "1.0"
+servers:
+  - url: https://crujofest.party/api/v1
+paths:
+  $ref: ./paths/paths.yml
+components:
+  schemas:
+    $ref: ./schemas.yml
+  securitySchemes:
+    $ref: ./securitySchema.yml
+  responses:
+    $ref: ./responses.yml

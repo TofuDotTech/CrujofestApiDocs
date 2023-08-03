@@ -1,0 +1,12 @@
+usernameParam:
+  name: username
+  in: path
+  required: true
+  schema:
+    type: string
+partyCodeParam:
+  name: partyCode
+  in: path
+  required: true
+  schema:
+    type: string

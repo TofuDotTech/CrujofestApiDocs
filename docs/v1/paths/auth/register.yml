@@ -1,0 +1,45 @@
+post:
+  summary: Registers a new user
+  description: Registers a new user
+  tags:
+    - Auth
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+              description: Between 6-30 characters and no special characters
+            password:
+              type: string
+              description: Between 8-16 characters, uppercase and lowercase letters
+            displayName:
+              type: string
+              description: Between 6-30 characters and no special characters
+            email:
+              type: string
+            birthdate:
+              type: string
+              description: "YYYY-MM-DD"
+  responses:
+    "204":
+      description: Not invited to Crujofest (only in beta)
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "210":
+      description: Username exists
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/loggedSchema"

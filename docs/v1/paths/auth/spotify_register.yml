@@ -1,0 +1,40 @@
+post:
+  summary: Registers a user with spotify
+  description: Register a user with spotify
+  tags:
+    - Auth
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            accessToken:
+              type: string
+            refreshToken:
+              type: string
+            username:
+              type: string
+              description: Between 6-30 characters and no special characters
+            displayName:
+              type: string
+              description: Between 6-30 characters and no special characters
+            birthdate:
+              type: string
+              description: "YYYY-MM-DD"
+            expiresIn:
+              type: number
+  responses:
+    "210":
+      description: Username exists
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/loggedSchema"

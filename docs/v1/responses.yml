@@ -1,0 +1,19 @@
+"403":
+  description: User possibly revoked crujofest access to spotify
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          success:
+            type: boolean
+          message:
+            type: string
+            description: Error message
+"401":
+  description: Unauthorized
+  content:
+    text/plain:
+      schema:
+        type: string
+        description: Unauthorized

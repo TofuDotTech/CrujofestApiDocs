@@ -1,0 +1,47 @@
+parameters:
+  - name: query
+    in: path
+    required: true
+    schema:
+      type: string
+get:
+  summary: Search for a user
+  description: Supports guest users. Search for a user given a query string
+  tags:
+    - Users
+  security:
+    - BearerAuth: []
+  responses:
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: Success status
+              users:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    displayName:
+                      type: string
+                    username:
+                      type: string
+                    photo:
+                      type: string
+                      description: Photo URL
+                    source:
+                      type: number
+                      description: 0-classic 1-spotify
+                    id:
+                      type: string
+                    spotifyUserId:
+                      type: string
+    "403":
+      $ref: "../../responses.yml#/403"
+    "401":
+      $ref: "../../responses.yml#/401"

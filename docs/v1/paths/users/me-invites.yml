@@ -1,0 +1,24 @@
+get:
+  summary: Gets the number of invites redeemed
+  description: Gets the number of invites redeemed
+  tags:
+    - Users
+  security:
+    - BearerAuth: []
+  responses:
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: Success status
+              redeemed:
+                type: number
+    "403":
+      $ref: "../../responses.yml#/403"
+    "401":
+      $ref: "../../responses.yml#/401"

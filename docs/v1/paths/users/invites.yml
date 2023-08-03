@@ -1,0 +1,43 @@
+post:
+  summary: Sends an email invitation to register to Crujofest
+  description: Sends an email invitation to register to Crujofest
+  tags:
+    - Users
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+              description: Username of the user that sent the invitation url
+            email:
+              type: string
+              description: email to send invitation
+  responses:
+    "401":
+      description: Invitations per user limit reached
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "204":
+      description: Username not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "210":
+      description: Email is registered or invited
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"

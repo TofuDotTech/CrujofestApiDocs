@@ -1,0 +1,51 @@
+#Auth
+/auth/login:
+  $ref: ./auth/login.yml
+/auth/register:
+  $ref: ./auth/register.yml
+/auth/spotify_auth:
+  $ref: ./auth/spotify_auth.yml
+/auth/spotify_register:
+  $ref: ./auth/spotify_register.yml
+
+#Parties
+/parties/invites/{inviteId}:
+  $ref: ./parties/invites-@{inviteId}.yml
+/parties/invites:
+  $ref: ./parties/invites.yml
+/parties:
+  $ref: ./parties/root.yml
+
+#Roles
+/roles:
+  $ref: ./roles/root.yml
+
+#Themes
+/themes:
+  $ref: ./themes/root.yml
+
+#Users
+/users/{username}/role:
+  $ref: ./users/@{username}-role.yml
+/users/{username}/verify:
+  $ref: ./users/@{username}-verify.yml
+/users/{username}:
+  $ref: ./users/@{username}.yml
+/users/guest/party:
+  $ref: ./users/guest-party.yml
+/users/invites:
+  $ref: ./users/invites.yml
+/users/me/invites:
+  $ref: ./users/me-invites.yml
+/users/me/party:
+  $ref: ./users/me-party.yml
+/users/me/photo:
+  $ref: ./users/me-photo.yml
+/users/me/pswd:
+  $ref: ./users/me-pswd.yml
+/users/me/spotify:
+  $ref: ./users/me-spotify.yml
+/users/me:
+  $ref: ./users/me.yml
+/users/search/{query}:
+  $ref: ./users/search-@{query}.yml

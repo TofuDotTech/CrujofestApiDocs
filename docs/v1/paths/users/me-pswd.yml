@@ -1,0 +1,39 @@
+patch:
+  summary: Change user password
+  description: Change user password
+  tags:
+    - Users
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            oldPassword:
+              type: string
+            newPasssword:
+              type: string
+  responses:
+    "401":
+      description: User source is not classic
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "452":
+      description: old password is incorrect
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "403":
+      $ref: "../../responses.yml#/403"

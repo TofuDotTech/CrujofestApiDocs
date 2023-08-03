@@ -1,0 +1,27 @@
+patch:
+  summary: Uploads and updates user photo
+  description: Uploads and updates user photo
+  tags:
+    - Users
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            photo:
+              type: string
+  responses:
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "403":
+      $ref: "../../responses.yml#/403"
+    "401":
+      $ref: "../../responses.yml#/401"

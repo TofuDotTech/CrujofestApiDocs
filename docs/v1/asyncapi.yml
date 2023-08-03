@@ -1,0 +1,66 @@
+asyncapi: "2.5.0"
+info:
+  title: Crujofest event-driven API
+  version: "1.0"
+  description: Event-driven architecture implemented with sockets for party features
+servers:
+  production:
+    url: ws://crujofest.party/
+    protocol: wss
+channels:
+  /:
+    publish:
+      description: Client to server events
+      message:
+        oneOf:
+          - $ref: ./events/publish.events.yml#/leaveParty
+          - $ref: ./events/publish.events.yml#/play
+          - $ref: ./events/publish.events.yml#/pause
+          - $ref: ./events/publish.events.yml#/next
+          - $ref: ./events/publish.events.yml#/previous
+          - $ref: ./events/publish.events.yml#/currentSong
+          - $ref: ./events/publish.events.yml#/querySong
+          - $ref: ./events/publish.events.yml#/getQueue
+          - $ref: ./events/publish.events.yml#/songChanged
+          - $ref: ./events/publish.events.yml#/paused
+          - $ref: ./events/publish.events.yml#/getUsersList
+    subscribe:
+      description: Server to client events
+      message:
+        oneOf:
+          - $ref: ./events/subscribe.events.yml#/pushSong
+          - $ref: ./events/subscribe.events.yml#/changeSong
+          - $ref: ./events/subscribe.events.yml#/changePausedState
+          - $ref: ./events/subscribe.events.yml#/addUser
+          - $ref: ./events/subscribe.events.yml#/deleteUser
+          - $ref: ./events/subscribe.events.yml#/deleteParty
+    bindings:
+      ws:
+        query:
+          type: object
+          properties:
+            auth:
+              type: object
+              properties:
+                token:
+                  type: string
+        required: [auth]
+  /admin:
+    publish:
+      description: Client to server events for serverless function communication with socket server
+      message:
+        oneOf:
+          - $ref: ./events/adminPublish.events.yml#/addUser
+          - $ref: ./events/adminPublish.events.yml#/deleteUser
+          - $ref: ./events/adminPublish.events.yml#/deleteParty
+    bindings:
+      ws:
+        query:
+          type: object
+          properties:
+            auth:
+              type: object
+              properties:
+                token:
+                  type: string
+        required: [auth]

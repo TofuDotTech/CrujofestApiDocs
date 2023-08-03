@@ -1,0 +1,29 @@
+patch:
+  summary: Joins a temporal user to a party by URL
+  description: Joins a temporal user to a party by URL
+  tags:
+    - Users
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            partyCode:
+              type: string
+            displayName:
+              type: string
+  responses:
+    "204":
+      description: Party does not exist
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/loggedSchema"

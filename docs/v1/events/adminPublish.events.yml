@@ -1,0 +1,22 @@
+addUser:
+  name: addUser
+  description: Add user to party users list
+  payload:
+    type: string
+    description: partyCode
+deleteUser:
+  name: deleteUser
+  description: Delete user from users list
+  payload:
+    type: array
+    prefixItems:
+      - type: string
+        description: username
+      - type: string
+        description: partyCode
+deleteParty:
+  name: deleteParty
+  description: Delete party
+  payload:
+    type: string
+    description: partyCode

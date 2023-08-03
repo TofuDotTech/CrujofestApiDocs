@@ -1,0 +1,47 @@
+post:
+  summary: Authenticates a user with spotify
+  description: Authenticates a user with spotify for login and registration
+  tags:
+    - Auth
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: string
+              description: code provided by spotify auth flow
+            redirectUri:
+              type: string
+              description: valid redirect uri depending on where the client is authenticating
+  responses:
+    "204":
+      description: Not invited to Crujofest (only in beta)
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "400":
+      description: User registration
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              accessToken:
+                type: string
+                description: spotify access token required for spotify registration request
+              refreshToken:
+                description: spotify refresh toekn required for spotify registration request
+                type: string
+              expiresIn:
+                description: spotify expiration in seconds required for spotify registration request
+                type: number
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/loggedSchema"

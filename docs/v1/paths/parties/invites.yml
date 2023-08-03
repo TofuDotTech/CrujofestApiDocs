@@ -1,0 +1,77 @@
+get:
+  summary: Returns all invites to the user
+  description: Returns all invites to the user
+  tags:
+    - Parties
+  security:
+    - BearerAuth: []
+  responses:
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: Success status
+              roles:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    inviteId:
+                      type: string
+                    userId:
+                      type: string
+                    partyCode:
+                      type: string
+                    toParty:
+                      type: object
+                      properties:
+                        partyName:
+                          type: string
+    "403":
+      $ref: "../../responses.yml#/403"
+    "401":
+      $ref: "../../responses.yml#/401"
+post:
+  summary: Invites various users to the party
+  description: Invites various users to the party
+  tags:
+    - Parties
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            ids:
+              type: array
+              items:
+                type: string
+  responses:
+    "204":
+      description: User is not in a party
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "401":
+      description: User does not have the correct role
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "403":
+      $ref: "../../responses.yml#/403"

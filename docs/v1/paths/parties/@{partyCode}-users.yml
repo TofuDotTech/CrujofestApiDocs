@@ -1,0 +1,37 @@
+parameters:
+  - $ref: "../../parameters.yml#/partyCodeParam"
+get:
+  summary: Returns users connected to a party
+  description: Returns users connected to a party
+  tags:
+    - Parties
+  security:
+    - BearerAuth: []
+  responses:
+    "200":
+    description: Successful request. Returns users
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+            displayName:
+              type: string
+            photo:
+              type: string
+              nullable: true
+            roleId:
+              type: number
+              nullable: true
+            isGuest:
+              type: boolean
+    "204":
+      description: User is not in a party
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "401":
+      $ref: "../../responses.yml#/401"

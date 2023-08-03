@@ -1,0 +1,1138 @@
+openapi: 3.0.3
+info:
+  title: Crujofest API
+  version: '1.0'
+servers:
+  - url: https://crujofest.party/api/v1
+paths:
+  /auth/login:
+    post:
+      summary: Logs the user in
+      description: Logs the user registered by email
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loggedSchema'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+  /auth/register:
+    post:
+      summary: Registers a new user
+      description: Registers a new user
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: Between 6-30 characters and no special characters
+                password:
+                  type: string
+                  description: Between 8-16 characters, uppercase and lowercase letters
+                displayName:
+                  type: string
+                  description: Between 6-30 characters and no special characters
+                email:
+                  type: string
+                birthdate:
+                  type: string
+                  description: YYYY-MM-DD
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loggedSchema'
+        '204':
+          description: Not invited to Crujofest (only in beta)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '210':
+          description: Username exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+  /auth/spotify_auth:
+    post:
+      summary: Authenticates a user with spotify
+      description: Authenticates a user with spotify for login and registration
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: code provided by spotify auth flow
+                redirectUri:
+                  type: string
+                  description: valid redirect uri depending on where the client is authenticating
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loggedSchema'
+        '204':
+          description: Not invited to Crujofest (only in beta)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '400':
+          description: User registration
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    description: spotify access token required for spotify registration request
+                  refreshToken:
+                    description: spotify refresh toekn required for spotify registration request
+                    type: string
+                  expiresIn:
+                    description: spotify expiration in seconds required for spotify registration request
+                    type: number
+  /auth/spotify_register:
+    post:
+      summary: Registers a user with spotify
+      description: Register a user with spotify
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                refreshToken:
+                  type: string
+                username:
+                  type: string
+                  description: Between 6-30 characters and no special characters
+                displayName:
+                  type: string
+                  description: Between 6-30 characters and no special characters
+                birthdate:
+                  type: string
+                  description: YYYY-MM-DD
+                expiresIn:
+                  type: number
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loggedSchema'
+        '210':
+          description: Username exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+  /parties/invites/{inviteId}:
+    parameters:
+      - name: inviteId
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      summary: Accepts an invitation
+      description: Accepts an invitation
+      tags:
+        - Parties
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '204':
+          description: Invite not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '209':
+          description: User is already in a party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+  /parties/invites:
+    get:
+      summary: Returns all invites to the user
+      description: Returns all invites to the user
+      tags:
+        - Parties
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Success status
+                  roles:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        inviteId:
+                          type: string
+                        userId:
+                          type: string
+                        partyCode:
+                          type: string
+                        toParty:
+                          type: object
+                          properties:
+                            partyName:
+                              type: string
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+    post:
+      summary: Invites various users to the party
+      description: Invites various users to the party
+      tags:
+        - Parties
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '204':
+          description: User is not in a party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '401':
+          description: User does not have the correct role
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '403':
+          $ref: '#/components/responses/403'
+  /parties:
+    post:
+      summary: Creates a new party
+      description: Creates a new party
+      tags:
+        - Parties
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Party name. Between 6-30 characters and no special characters
+                themeId:
+                  type: number
+                  description: Id from choosed theme
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '204':
+          description: User is not connected to spotify
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '209':
+          description: User is already in a party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+  /roles:
+    description: Requires authentication
+    get:
+      summary: Gets all roles available
+      description: Supports guest users. Gets all roles available
+      tags:
+        - Roles
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Success status
+                  roles:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        roleId:
+                          type: number
+                        roleName:
+                          type: string
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+  /themes:
+    description: Requires authentication
+    get:
+      summary: Gets all themes available
+      description: Supports guest users. Gets all themes available
+      tags:
+        - Themes
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Success status
+                  roles:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        themeId:
+                          type: number
+                        themeName:
+                          type: string
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+  /users/{username}/role:
+    parameters:
+      - $ref: '#/components/parameters/usernameParam'
+    patch:
+      summary: Change user role
+      description: Change user role
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                roleId:
+                  type: number
+                  description: new role for user
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '401':
+          description: User does not have the correct role
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '403':
+          $ref: '#/components/responses/403'
+  /users/{username}/verify:
+    parameters:
+      - $ref: '#/components/parameters/usernameParam'
+    patch:
+      summary: Verifies user email
+      description: Verifies user email
+      tags:
+        - Users
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+  /users/{username}:
+    parameters:
+      - $ref: '#/components/parameters/usernameParam'
+    get:
+      summary: Gets a specific user info
+      description: Supports guest user. Gets a specific user info given his username
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Success status
+                  user:
+                    type: object
+                    properties:
+                      displayName:
+                        type: string
+                      username:
+                        type: string
+                      email:
+                        type: string
+                      photo:
+                        type: string
+                        description: Photo URL
+                      birthdate:
+                        type: string
+                        description: YYYY-MM-DD
+                      source:
+                        type: number
+                        description: 0-classic 1-spotify
+                      id:
+                        type: string
+                      spotifyUserId:
+                        type: string
+                      isGuest:
+                        type: boolean
+                        description: Is a temporal user just for a party
+        '204':
+          description: User does not exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+  /users/guest/party:
+    patch:
+      summary: Joins a temporal user to a party by URL
+      description: Joins a temporal user to a party by URL
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                partyCode:
+                  type: string
+                displayName:
+                  type: string
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loggedSchema'
+        '204':
+          description: Party does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+  /users/invites:
+    post:
+      summary: Sends an email invitation to register to Crujofest
+      description: Sends an email invitation to register to Crujofest
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: Username of the user that sent the invitation url
+                email:
+                  type: string
+                  description: email to send invitation
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '204':
+          description: Username not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '210':
+          description: Email is registered or invited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '401':
+          description: Invitations per user limit reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+  /users/me/invites:
+    get:
+      summary: Gets the number of invites redeemed
+      description: Gets the number of invites redeemed
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Success status
+                  redeemed:
+                    type: number
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+  /users/me/party:
+    get:
+      summary: Returns current party
+      description: Supports guest users. Returns current party
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Success status
+                  partyInfo:
+                    type: object
+                    properties:
+                      roleId:
+                        type: number
+                      currentParty:
+                        type: object
+                        properties:
+                          partyCode:
+                            type: string
+                          partyName:
+                            type: string
+                          initialDate:
+                            type: string
+                            description: YYYY-MM-DD
+                          themeId:
+                            type: number
+        '204':
+          description: User is not in a party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+    delete:
+      summary: Deletes or leaves party
+      description: Supports guest users. Deletes or leaves party depending on user role
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '204':
+          description: User is not in a party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+    patch:
+      summary: Joins a party by URL
+      description: Joins a party by URL
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                partyCode:
+                  type: string
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '204':
+          description: Party does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '209':
+          description: User is in a party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+  /users/me/photo:
+    patch:
+      summary: Uploads and updates user photo
+      description: Uploads and updates user photo
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                photo:
+                  type: string
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+  /users/me/pswd:
+    patch:
+      summary: Change user password
+      description: Change user password
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                oldPassword:
+                  type: string
+                newPasssword:
+                  type: string
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '401':
+          description: User source is not classic
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '403':
+          $ref: '#/components/responses/403'
+        '452':
+          description: old password is incorrect
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+  /users/me/spotify:
+    patch:
+      summary: Connects spotify to a classic account
+      description: Connects spotify to a classic account
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: Spotify provided code
+                redirectUri:
+                  type: string
+                  description: Valid redirect uri depending on where the client is authenticating
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '209':
+          description: User is connected to a spotify account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '210':
+          description: Spotify account is connected to other user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '401':
+          description: User does not have source 0 (classic)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '403':
+          $ref: '#/components/responses/403'
+    delete:
+      summary: Logs out of connected spotify account
+      description: Logs out of connected spotify account for classic user
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '401':
+          description: User does not have source 0 (classic) or does not have a connected spotify account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '403':
+          $ref: '#/components/responses/403'
+  /users/me:
+    get:
+      summary: Get logged user info
+      description: Supports guest users. Get logged user info
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Success status
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      displayName:
+                        type: string
+                      username:
+                        type: string
+                      birthdate:
+                        type: string
+                      photo:
+                        type: string
+                      email:
+                        type: string
+                      emailVerified:
+                        type: boolean
+                      isGuest:
+                        type: boolean
+                      source:
+                        type: number
+                      spotifyUserId:
+                        type: string
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+    patch:
+      summary: Modifies some fields of the logged user
+      description: Modifies email, displayName and birthdate of the logged user
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                displayName:
+                  type: string
+                birthdate:
+                  type: string
+                  description: YYYY-MM-DD
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+    delete:
+      summary: Deletes the logged user
+      description: Deletes the logged user
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: password
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '452':
+          description: password is incorrect
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+  /users/search/{query}:
+    parameters:
+      - name: query
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Search for a user
+      description: Supports guest users. Search for a user given a query string
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Success status
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        displayName:
+                          type: string
+                        username:
+                          type: string
+                        photo:
+                          type: string
+                          description: Photo URL
+                        source:
+                          type: number
+                          description: 0-classic 1-spotify
+                        id:
+                          type: string
+                        spotifyUserId:
+                          type: string
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+components:
+  schemas:
+    loggedSchema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+            - true
+          description: Success status
+        token:
+          type: string
+          description: JWT token generated
+        expiresIn:
+          type: string
+          enum:
+            - 15d
+          description: Token expiration time
+    successSchema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Success status
+    currentSongSchema:
+      type: object
+      properties:
+        success:
+          type: boolean
+        isPlaying:
+          type: boolean
+        album:
+          type: string
+        artwork:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+              height:
+                type: number
+              width:
+                type: number
+        artist:
+          type: string
+        explicit:
+          type: boolean
+        track:
+          type: string
+        url:
+          type: string
+        disabledControls:
+          type: object
+          properties:
+            interrupting_playback:
+              type: boolean
+              nullable: true
+            pausing:
+              type: boolean
+              nullable: true
+            resuming:
+              type: boolean
+              nullable: true
+            seeking:
+              type: boolean
+              nullable: true
+            skipping_next:
+              type: boolean
+              nullable: true
+            skipping_prev:
+              type: boolean
+              nullable: true
+            toggling_repeat_context:
+              type: boolean
+              nullable: true
+            toggling_shuffle:
+              type: boolean
+              nullable: true
+            toggling_repeat_track:
+              type: boolean
+              nullable: true
+            transferring_playback:
+              type: boolean
+              nullable: true
+    resultItemSchema:
+      type: object
+      properties:
+        image:
+          type: string
+        track:
+          type: string
+        artist:
+          type: string
+        duration:
+          type: number
+        songUrl:
+          type: string
+        songUri:
+          type: string
+        album:
+          type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  responses:
+    '401':
+      description: Unauthorized
+      content:
+        text/plain:
+          schema:
+            type: string
+            description: Unauthorized
+    '403':
+      description: User possibly revoked crujofest access to spotify
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+              message:
+                type: string
+                description: Error message
+  parameters:
+    usernameParam:
+      name: username
+      in: path
+      required: true
+      schema:
+        type: string

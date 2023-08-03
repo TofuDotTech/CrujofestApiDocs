@@ -1,0 +1,108 @@
+get:
+  summary: Returns current party
+  description: Supports guest users. Returns current party
+  tags:
+    - Users
+  security:
+    - BearerAuth: []
+  responses:
+    "204":
+      description: User is not in a party
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: Success status
+              partyInfo:
+                type: object
+                properties:
+                  roleId:
+                    type: number
+                  currentParty:
+                    type: object
+                    properties:
+                      partyCode:
+                        type: string
+                      partyName:
+                        type: string
+                      initialDate:
+                        type: string
+                        description: YYYY-MM-DD
+                      themeId:
+                        type: number
+    "403":
+      $ref: "../../responses.yml#/403"
+    "401":
+      $ref: "../../responses.yml#/401"
+delete:
+  summary: Deletes or leaves party
+  description: Supports guest users. Deletes or leaves party depending on user role
+  tags:
+    - Users
+  security:
+    - BearerAuth: []
+  responses:
+    "204":
+      description: User is not in a party
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "403":
+      $ref: "../../responses.yml#/403"
+    "401":
+      $ref: "../../responses.yml#/401"
+patch:
+  summary: Joins a party by URL
+  description: Joins a party by URL
+  tags:
+    - Users
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            partyCode:
+              type: string
+  responses:
+    "209":
+      description: User is in a party
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "204":
+      description: Party does not exist
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "403":
+      $ref: "../../responses.yml#/403"
+    "401":
+      $ref: "../../responses.yml#/401"

@@ -1,0 +1,107 @@
+get:
+  summary: Get logged user info
+  description: Supports guest users. Get logged user info
+  tags:
+    - Users
+  security:
+    - BearerAuth: []
+  responses:
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: Success status
+              user:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  displayName:
+                    type: string
+                  username:
+                    type: string
+                  birthdate:
+                    type: string
+                  photo:
+                    type: string
+                  email:
+                    type: string
+                  emailVerified:
+                    type: boolean
+                  isGuest:
+                    type: boolean
+                  source:
+                    type: number
+                  spotifyUserId:
+                    type: string
+    "403":
+      $ref: "../../responses.yml#/403"
+    "401":
+      $ref: "../../responses.yml#/401"
+patch:
+  summary: Modifies some fields of the logged user
+  description: Modifies email, displayName and birthdate of the logged user
+  tags:
+    - Users
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+            displayName:
+              type: string
+            birthdate:
+              type: string
+              description: YYYY-MM-DD
+  responses:
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "403":
+      $ref: "../../responses.yml#/403"
+    "401":
+      $ref: "../../responses.yml#/401"
+delete:
+  summary: Deletes the logged user
+  description: Deletes the logged user
+  tags:
+    - Users
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: password
+      in: query
+      required: false
+      schema:
+        type: string
+  responses:
+    "452":
+      description: password is incorrect
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
+    "403":
+      $ref: "../../responses.yml#/403"
+    "401":
+      $ref: "../../responses.yml#/401"
