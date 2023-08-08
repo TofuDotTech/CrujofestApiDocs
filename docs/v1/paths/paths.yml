@@ -53,3 +53,5 @@
   $ref: ./users/search-@{query}.yml
 /users/host/spotifyToken:
   $ref: ./users/host-spotifyToken.yml
+/users/me/token:
+  $ref: ./users/me-token.yml

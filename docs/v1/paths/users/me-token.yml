@@ -1,0 +1,23 @@
+patch:
+  summary: Refreshes the user's token
+  description: Accepts guest users. Refreshes the users's token
+  tags:
+    - Users
+  security:
+    - BearerAuth: []
+  responses:
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+              expiresIn:
+                type: string
+    "403":
+      $ref: "../../responses.yml#/403"
+    "401":
+      $ref: "../../responses.yml#/401"
