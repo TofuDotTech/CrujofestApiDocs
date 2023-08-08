@@ -329,6 +329,49 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+  /parties/{partyCode}/users/:
+    parameters:
+      - $ref: '#/components/parameters/partyCodeParam'
+    get:
+      summary: Returns users connected to a party
+      description: Support guest users. Returns users connected to a party
+      tags:
+        - Parties
+      security:
+        - BearerAuth: []
+      responses:
+        '200': null
+        '204':
+          description: User is not in a party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '401':
+          $ref: '#/components/responses/401'
+        description: Successful request. Returns users
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                users:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      username:
+                        type: string
+                      displayName:
+                        type: string
+                      photo:
+                        type: string
+                        nullable: true
+                      roleId:
+                        type: number
+                        nullable: true
+                      isGuest:
+                        type: boolean
   /roles:
     description: Requires authentication
     get:
@@ -636,6 +679,8 @@ paths:
                             description: YYYY-MM-DD
                           themeId:
                             type: number
+                          partyPlaylistId:
+                            type: string
         '204':
           description: User is not in a party
           content:
@@ -1003,6 +1048,40 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+  /users/host/spotifyToken:
+    get:
+      summary: Gets the party host spotify access token
+      description: Supports guest users. Gets the party host spotify access token
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: partyCode
+          in: query
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+        '204':
+          description: Host or party not found
+          content:
+            applicaton/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
 components:
   schemas:
     loggedSchema:
@@ -1130,6 +1209,12 @@ components:
                 type: string
                 description: Error message
   parameters:
+    partyCodeParam:
+      name: partyCode
+      in: path
+      required: true
+      schema:
+        type: string
     usernameParam:
       name: username
       in: path

@@ -2,7 +2,7 @@ parameters:
   - $ref: "../../parameters.yml#/partyCodeParam"
 get:
   summary: Returns users connected to a party
-  description: Returns users connected to a party
+  description: Support guest users. Returns users connected to a party
   tags:
     - Parties
   security:
@@ -15,18 +15,23 @@ get:
         schema:
           type: object
           properties:
-            username:
-              type: string
-            displayName:
-              type: string
-            photo:
-              type: string
-              nullable: true
-            roleId:
-              type: number
-              nullable: true
-            isGuest:
-              type: boolean
+            users:
+              type: array
+              items:
+                type: object
+                properties:
+                  username:
+                    type: string
+                  displayName:
+                    type: string
+                  photo:
+                    type: string
+                    nullable: true
+                  roleId:
+                    type: number
+                    nullable: true
+                  isGuest:
+                    type: boolean
     "204":
       description: User is not in a party
       content:

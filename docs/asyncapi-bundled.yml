@@ -131,15 +131,6 @@ channels:
             payload:
               type: boolean
               description: flag
-          - description: Change the role of a user given his id
-            name: changeRole
-            payload:
-              type: array
-              prefixItems:
-                - type: number
-                  description: roleId
-                - type: string
-                  description: userId
           - description: Get the party users list
             name: getUsersList
             x-ack:

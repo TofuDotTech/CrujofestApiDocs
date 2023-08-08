@@ -1,0 +1,33 @@
+get:
+  summary: Gets the party host spotify access token
+  description: Supports guest users. Gets the party host spotify access token
+  tags:
+    - Users
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: partyCode
+      in: query
+  responses:
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              accessToken:
+                type: string
+    "204":
+      description: Host or party not found
+      content:
+        applicaton/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+    "403":
+      $ref: "../../responses.yml#/403"
+    "401":
+      $ref: "../../responses.yml#/401"
