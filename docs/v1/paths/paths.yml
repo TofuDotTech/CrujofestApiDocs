@@ -55,3 +55,9 @@
   $ref: ./users/host-spotifyToken.yml
 /users/me/token:
   $ref: ./users/me-token.yml
+/users/account/password:
+  $ref: ./users/account-password.yml
+
+#Misc
+/password-reset:
+  $ref: ./password-reset.yml
