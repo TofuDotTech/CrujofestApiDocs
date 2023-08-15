@@ -1107,14 +1107,20 @@ paths:
         '403':
           $ref: '#/components/responses/403'
   /users/account/password:
-    patch:
+    post:
       summary: Sends an email to change user password
       description: Sends and email to change user password
       tags:
         - Users
-      parameters:
-        - name: email
-          in: query
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
       responses:
         '200':
           description: Successful request
@@ -1124,12 +1130,6 @@ paths:
                 $ref: '#/components/schemas/successSchema'
         '401':
           description: User associated with email was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
-        '403':
-          description: User source is not classic
           content:
             application/json:
               schema:
