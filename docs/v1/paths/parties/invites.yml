@@ -16,7 +16,7 @@ get:
               success:
                 type: boolean
                 description: Success status
-              roles:
+              invites:
                 type: array
                 items:
                   type: object
