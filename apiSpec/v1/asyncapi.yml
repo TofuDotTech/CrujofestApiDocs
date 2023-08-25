@@ -23,7 +23,6 @@ channels:
           - $ref: ./events/publish.events.yml#/getQueue
           - $ref: ./events/publish.events.yml#/songChanged
           - $ref: ./events/publish.events.yml#/paused
-          - $ref: ./events/publish.events.yml#/getUsersList
     subscribe:
       description: Server to client events
       message:

@@ -131,33 +131,6 @@ channels:
             payload:
               type: boolean
               description: flag
-          - description: Get the party users list
-            name: getUsersList
-            x-ack:
-              args:
-                type: object
-                properties:
-                  status:
-                    type: number
-                  usersList:
-                    nullable: true
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        username:
-                          type: string
-                        displayName:
-                          type: string
-                        roleId:
-                          type: number
-                          nullable: true
-                        photo:
-                          type: string
-                          nullable: true
-                  message:
-                    type: string
-                    nullable: true
     subscribe:
       description: Server to client events
       message:
