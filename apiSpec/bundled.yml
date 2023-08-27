@@ -340,7 +340,30 @@ paths:
       security:
         - BearerAuth: []
       responses:
-        '200': null
+        '200':
+          description: Successful request. Returns users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        username:
+                          type: string
+                        displayName:
+                          type: string
+                        photo:
+                          type: string
+                          nullable: true
+                        roleId:
+                          type: number
+                          nullable: true
+                        isGuest:
+                          type: boolean
         '204':
           description: User is not in a party
           content:
@@ -349,29 +372,6 @@ paths:
                 $ref: '#/components/schemas/successSchema'
         '401':
           $ref: '#/components/responses/401'
-        description: Successful request. Returns users
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                users:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      username:
-                        type: string
-                      displayName:
-                        type: string
-                      photo:
-                        type: string
-                        nullable: true
-                      roleId:
-                        type: number
-                        nullable: true
-                      isGuest:
-                        type: boolean
   /roles:
     description: Requires authentication
     get:
