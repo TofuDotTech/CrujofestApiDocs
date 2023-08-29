@@ -62,6 +62,12 @@ delete:
           - true
           - false
   responses:
+    "400":
+      description: Trying to delete party but no deletePlaylist param provided
+      content:
+        applicatoin/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
     "204":
       description: User is not in a party
       content:

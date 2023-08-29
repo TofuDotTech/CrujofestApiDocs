@@ -720,6 +720,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/successSchema'
+        '400':
+          description: Trying to delete party but no deletePlaylist param provided
+          content:
+            applicatoin/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
         '401':
           $ref: '#/components/responses/401'
         '403':
