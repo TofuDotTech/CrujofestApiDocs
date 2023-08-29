@@ -52,6 +52,15 @@ delete:
     - Users
   security:
     - BearerAuth: []
+  parameters:
+    - name: deletePlaylist
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - true
+          - false
   responses:
     "204":
       description: User is not in a party

@@ -698,6 +698,15 @@ paths:
         - Users
       security:
         - BearerAuth: []
+      parameters:
+        - name: deletePlaylist
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - true
+              - false
       responses:
         '200':
           description: Successful request
