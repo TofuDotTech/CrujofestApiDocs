@@ -8,7 +8,7 @@ changeSong:
   description: Notify client to change currently playing song
   payload:
     oneOf:
-      - $ref: ../schemas.yml#/resultItemSchema
+      - $ref: ../schemas.yml#/currentSongSchema
       - type: string
         description: value of null
 changePausedState:

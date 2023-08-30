@@ -158,7 +158,7 @@ channels:
             description: Notify client to change currently playing song
             payload:
               oneOf:
-                - $ref: '#/channels/~1/subscribe/message/oneOf/0/payload'
+                - $ref: '#/channels/~1/publish/message/oneOf/8/payload'
                 - type: string
                   description: value of null
           - name: changePausedState
