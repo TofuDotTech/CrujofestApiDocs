@@ -1265,8 +1265,17 @@ components:
     resultItemSchema:
       type: object
       properties:
-        image:
-          type: string
+        images:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+              height:
+                type: number
+              width:
+                type: number
         track:
           type: string
         artist:
