@@ -38,7 +38,7 @@ channels:
                     type: number
                   currentSong:
                     nullable: true
-                    $ref: '#/channels/~1/publish/message/oneOf/8/payload'
+                    $ref: '#/channels/~1/subscribe/message/oneOf/1/payload/oneOf/0'
           - description: Add a song to the queue
             name: querySong
             payload:
@@ -64,66 +64,8 @@ channels:
           - description: Notify the server that the currently playing song has changed
             name: songChanged
             payload:
-              type: object
-              properties:
-                success:
-                  type: boolean
-                isPlaying:
-                  type: boolean
-                album:
-                  type: string
-                artwork:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      url:
-                        type: string
-                      height:
-                        type: number
-                      width:
-                        type: number
-                artist:
-                  type: string
-                explicit:
-                  type: boolean
-                track:
-                  type: string
-                url:
-                  type: string
-                disabledControls:
-                  type: object
-                  properties:
-                    interrupting_playback:
-                      type: boolean
-                      nullable: true
-                    pausing:
-                      type: boolean
-                      nullable: true
-                    resuming:
-                      type: boolean
-                      nullable: true
-                    seeking:
-                      type: boolean
-                      nullable: true
-                    skipping_next:
-                      type: boolean
-                      nullable: true
-                    skipping_prev:
-                      type: boolean
-                      nullable: true
-                    toggling_repeat_context:
-                      type: boolean
-                      nullable: true
-                    toggling_shuffle:
-                      type: boolean
-                      nullable: true
-                    toggling_repeat_track:
-                      type: boolean
-                      nullable: true
-                    transferring_playback:
-                      type: boolean
-                      nullable: true
+              type: string
+              description: Spotify song URI
           - description: >-
               Notify the server that the currently playing song was paused or
               resumed
@@ -167,7 +109,66 @@ channels:
             description: Notify client to change currently playing song
             payload:
               oneOf:
-                - $ref: '#/channels/~1/publish/message/oneOf/8/payload'
+                - type: object
+                  properties:
+                    success:
+                      type: boolean
+                    isPlaying:
+                      type: boolean
+                    album:
+                      type: string
+                    artwork:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          url:
+                            type: string
+                          height:
+                            type: number
+                          width:
+                            type: number
+                    artist:
+                      type: string
+                    explicit:
+                      type: boolean
+                    track:
+                      type: string
+                    url:
+                      type: string
+                    disabledControls:
+                      type: object
+                      properties:
+                        interrupting_playback:
+                          type: boolean
+                          nullable: true
+                        pausing:
+                          type: boolean
+                          nullable: true
+                        resuming:
+                          type: boolean
+                          nullable: true
+                        seeking:
+                          type: boolean
+                          nullable: true
+                        skipping_next:
+                          type: boolean
+                          nullable: true
+                        skipping_prev:
+                          type: boolean
+                          nullable: true
+                        toggling_repeat_context:
+                          type: boolean
+                          nullable: true
+                        toggling_shuffle:
+                          type: boolean
+                          nullable: true
+                        toggling_repeat_track:
+                          type: boolean
+                          nullable: true
+                        transferring_playback:
+                          type: boolean
+                          nullable: true
                 - type: string
                   description: value of null
           - name: changePausedState

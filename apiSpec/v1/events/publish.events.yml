@@ -26,7 +26,8 @@ songChanged:
   description: Notify the server that the currently playing song has changed
   name: songChanged
   payload:
-    $ref: ../schemas.yml#/currentSongSchema
+    type: string
+    description: Spotify song URI
 paused:
   description: Notify the server that the currently playing song was paused or resumed
   name: paused
