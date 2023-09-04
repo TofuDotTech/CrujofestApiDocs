@@ -192,6 +192,8 @@ channels:
                 photo:
                   type: string
                   nullable: true
+                isGuest:
+                  type: boolean
           - name: deleteUser
             description: Delete user from party users list
             payload:

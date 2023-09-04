@@ -32,6 +32,8 @@ addUser:
       photo:
         type: string
         nullable: true
+      isGuest:
+        type: boolean
 deleteUser:
   name: deleteUser
   description: Delete user from party users list
