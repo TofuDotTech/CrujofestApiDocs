@@ -20,3 +20,15 @@ deleteParty:
   payload:
     type: string
     description: partyCode
+roleChanged:
+  name: roleChanged
+  description: Notify that the user's role has changed
+  payload:
+    type: array
+    prefixItems:
+      - type: string
+        description: username
+      - type: number
+        description: new role
+      - type: string
+        description: partyCode

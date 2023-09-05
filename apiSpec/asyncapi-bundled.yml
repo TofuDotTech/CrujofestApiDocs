@@ -201,6 +201,15 @@ channels:
               description: username
           - name: deleteParty
             description: Notify client that the party was deleted
+          - name: changeRole
+            description: Notify to client that the user's role has changed
+            payload:
+              type: object
+              properties:
+                username:
+                  type: string
+                newRole:
+                  type: number
     bindings:
       ws:
         query:
@@ -239,6 +248,17 @@ channels:
             payload:
               type: string
               description: partyCode
+          - name: roleChanged
+            description: Notify that the user's role has changed
+            payload:
+              type: array
+              prefixItems:
+                - type: string
+                  description: username
+                - type: number
+                  description: new role
+                - type: string
+                  description: partyCode
     bindings:
       ws:
         query:

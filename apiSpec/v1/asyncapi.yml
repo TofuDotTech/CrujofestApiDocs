@@ -33,6 +33,7 @@ channels:
           - $ref: ./events/subscribe.events.yml#/addUser
           - $ref: ./events/subscribe.events.yml#/deleteUser
           - $ref: ./events/subscribe.events.yml#/deleteParty
+          - $ref: ./events/subscribe.events.yml#/changeRole
     bindings:
       ws:
         query:
@@ -52,6 +53,7 @@ channels:
           - $ref: ./events/adminPublish.events.yml#/addUser
           - $ref: ./events/adminPublish.events.yml#/deleteUser
           - $ref: ./events/adminPublish.events.yml#/deleteParty
+          - $ref: ./events/adminPublish.events.yml#/roleChanged
     bindings:
       ws:
         query:

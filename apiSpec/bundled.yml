@@ -465,6 +465,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/successSchema'
+        '204':
+          description: User is not in a party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
         '401':
           description: User does not have the correct role
           content:

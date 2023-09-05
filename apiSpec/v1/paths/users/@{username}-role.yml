@@ -30,5 +30,11 @@ patch:
         application/json:
           schema:
             $ref: "../../schemas.yml#/successSchema"
+    "204":
+      description: User is not in a party
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/successSchema"
     "403":
       $ref: "../../responses.yml#/403"
