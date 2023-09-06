@@ -54,12 +54,10 @@ getQueue:
       properties:
         status:
           type: number
-        previousQueue:
+        partyQueue:
           type: array
           Description: JSON strings with the following schemas
           items:
             $ref: ../schemas.yml#/resultItemSchema
-        nextQueue:
-          type: array
-          items:
-            $ref: ../schemas.yml#/resultItemSchema
+        queuePointer:
+          type: number
