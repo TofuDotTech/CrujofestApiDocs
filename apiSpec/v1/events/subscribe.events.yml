@@ -32,6 +32,8 @@ addUser:
       photo:
         type: string
         nullable: true
+      isGuest:
+        type: boolean
 deleteUser:
   name: deleteUser
   description: Delete user from party users list
@@ -41,3 +43,13 @@ deleteUser:
 deleteParty:
   name: deleteParty
   description: Notify client that the party was deleted
+changeRole:
+  name: changeRole
+  description: Notify to client that the user's role has changed
+  payload:
+    type: object
+    properties:
+      username:
+        type: string
+      newRole:
+        type: number

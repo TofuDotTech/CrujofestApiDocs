@@ -312,7 +312,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
+                type: object
+                properties:
+                  playlistId:
+                    type: string
+                    description: Spotify playlist id associated with the party
         '204':
           description: User is not connected to spotify
           content:
@@ -461,6 +465,12 @@ paths:
       responses:
         '200':
           description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '204':
+          description: User is not in a party
           content:
             application/json:
               schema:
@@ -1265,8 +1275,17 @@ components:
     resultItemSchema:
       type: object
       properties:
-        image:
-          type: string
+        images:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+              height:
+                type: number
+              width:
+                type: number
         track:
           type: string
         artist:
