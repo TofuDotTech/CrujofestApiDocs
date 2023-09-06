@@ -312,7 +312,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
+                type: object
+                properties:
+                  playlistId:
+                    type: string
+                    description: Spotify playlist id associated with the party
         '204':
           description: User is not connected to spotify
           content:
