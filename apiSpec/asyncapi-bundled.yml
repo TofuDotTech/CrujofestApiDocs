@@ -52,15 +52,13 @@ channels:
                 properties:
                   status:
                     type: number
-                  previousQueue:
+                  partyQueue:
                     type: array
                     Description: JSON strings with the following schemas
                     items:
                       $ref: '#/channels/~1/subscribe/message/oneOf/0/payload'
-                  nextQueue:
-                    type: array
-                    items:
-                      $ref: '#/channels/~1/subscribe/message/oneOf/0/payload'
+                  queuePointer:
+                    type: number
           - description: Notify the server that the currently playing song has changed
             name: songChanged
             payload:
