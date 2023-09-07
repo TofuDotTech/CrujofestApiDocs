@@ -8,7 +8,12 @@ changeSong:
   description: Notify client to change currently playing song
   payload:
     oneOf:
-      - $ref: ../schemas.yml#/currentSongSchema
+      - type: object
+        properties:
+          song:
+            $ref: ../schemas.yml#/currentSongSchema
+          queuePointer:
+            type: number
       - type: string
         description: value of null
 changePausedState:

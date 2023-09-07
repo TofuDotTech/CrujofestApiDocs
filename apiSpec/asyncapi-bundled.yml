@@ -38,7 +38,8 @@ channels:
                     type: number
                   currentSong:
                     nullable: true
-                    $ref: '#/channels/~1/subscribe/message/oneOf/1/payload/oneOf/0'
+                    $ref: >-
+                      #/channels/~1/subscribe/message/oneOf/1/payload/oneOf/0/properties/song
           - description: Add a song to the queue
             name: querySong
             payload:
@@ -109,64 +110,69 @@ channels:
               oneOf:
                 - type: object
                   properties:
-                    success:
-                      type: boolean
-                    isPlaying:
-                      type: boolean
-                    album:
-                      type: string
-                    artwork:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          url:
-                            type: string
-                          height:
-                            type: number
-                          width:
-                            type: number
-                    artist:
-                      type: string
-                    explicit:
-                      type: boolean
-                    track:
-                      type: string
-                    url:
-                      type: string
-                    disabledControls:
+                    song:
                       type: object
                       properties:
-                        interrupting_playback:
+                        success:
                           type: boolean
-                          nullable: true
-                        pausing:
+                        isPlaying:
                           type: boolean
-                          nullable: true
-                        resuming:
+                        album:
+                          type: string
+                        artwork:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              url:
+                                type: string
+                              height:
+                                type: number
+                              width:
+                                type: number
+                        artist:
+                          type: string
+                        explicit:
                           type: boolean
-                          nullable: true
-                        seeking:
-                          type: boolean
-                          nullable: true
-                        skipping_next:
-                          type: boolean
-                          nullable: true
-                        skipping_prev:
-                          type: boolean
-                          nullable: true
-                        toggling_repeat_context:
-                          type: boolean
-                          nullable: true
-                        toggling_shuffle:
-                          type: boolean
-                          nullable: true
-                        toggling_repeat_track:
-                          type: boolean
-                          nullable: true
-                        transferring_playback:
-                          type: boolean
-                          nullable: true
+                        track:
+                          type: string
+                        url:
+                          type: string
+                        disabledControls:
+                          type: object
+                          properties:
+                            interrupting_playback:
+                              type: boolean
+                              nullable: true
+                            pausing:
+                              type: boolean
+                              nullable: true
+                            resuming:
+                              type: boolean
+                              nullable: true
+                            seeking:
+                              type: boolean
+                              nullable: true
+                            skipping_next:
+                              type: boolean
+                              nullable: true
+                            skipping_prev:
+                              type: boolean
+                              nullable: true
+                            toggling_repeat_context:
+                              type: boolean
+                              nullable: true
+                            toggling_shuffle:
+                              type: boolean
+                              nullable: true
+                            toggling_repeat_track:
+                              type: boolean
+                              nullable: true
+                            transferring_playback:
+                              type: boolean
+                              nullable: true
+                    queuePointer:
+                      type: number
                 - type: string
                   description: value of null
           - name: changePausedState
