@@ -28,7 +28,7 @@ channels:
             name: next
           - description: Play the previous song in the queue
             name: previous
-          - description: Get current song playing
+          - description: Get current song playing. Returns null if no song is playing
             name: currentSong
             x-ack:
               args:
