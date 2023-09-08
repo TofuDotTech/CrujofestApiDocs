@@ -54,6 +54,7 @@ channels:
           - $ref: ./events/adminPublish.events.yml#/deleteUser
           - $ref: ./events/adminPublish.events.yml#/deleteParty
           - $ref: ./events/adminPublish.events.yml#/roleChanged
+          - $ref: ./events/adminPublish.events.yml#/createParty
     bindings:
       ws:
         query:

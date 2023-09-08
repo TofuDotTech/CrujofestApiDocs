@@ -26,8 +26,11 @@ songChanged:
   description: Notify the server that the currently playing song has changed
   name: songChanged
   payload:
-    type: string
-    description: Spotify song URI
+    oneOf:
+      - type: string
+        description: Spotify song URI
+      - type: number
+        description: queuePointer
 paused:
   description: Notify the server that the currently playing song was paused or resumed
   name: paused

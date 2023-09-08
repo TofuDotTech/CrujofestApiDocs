@@ -63,8 +63,11 @@ channels:
           - description: Notify the server that the currently playing song has changed
             name: songChanged
             payload:
-              type: string
-              description: Spotify song URI
+              oneOf:
+                - type: string
+                  description: Spotify song URI
+                - type: number
+                  description: queuePointer
           - description: >-
               Notify the server that the currently playing song was paused or
               resumed
@@ -263,6 +266,11 @@ channels:
                   description: new role
                 - type: string
                   description: partyCode
+          - name: createParty
+            description: Create queue pointer
+            payload:
+              type: string
+              description: partyCode
     bindings:
       ws:
         query:
