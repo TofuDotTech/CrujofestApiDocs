@@ -84,7 +84,7 @@ channels:
             payload:
               type: object
               properties:
-                images:
+                artwork:
                   type: array
                   items:
                     type: object
@@ -101,9 +101,9 @@ channels:
                   type: string
                 duration:
                   type: number
-                songUrl:
+                url:
                   type: string
-                songUri:
+                uri:
                   type: string
                 album:
                   type: string

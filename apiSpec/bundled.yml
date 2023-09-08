@@ -1275,7 +1275,7 @@ components:
     resultItemSchema:
       type: object
       properties:
-        images:
+        artwork:
           type: array
           items:
             type: object
@@ -1292,9 +1292,9 @@ components:
           type: string
         duration:
           type: number
-        songUrl:
+        url:
           type: string
-        songUri:
+        uri:
           type: string
         album:
           type: string
