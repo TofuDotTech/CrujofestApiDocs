@@ -80,7 +80,7 @@ patch:
           schema:
             $ref: "../../schemas.yml#/successSchema"
     "403":
-      description: User possibly revoked crujofest access to spotify or isn't the host
+      description: User isn't the host
       content:
         application/json:
           schema:
@@ -90,7 +90,7 @@ patch:
                 type: boolean
               code:
                 type: string
-                description: spotify_access_revoked or user_not_host
+                description: user_not_host
               message:
                 type: string
                 description: Error message
