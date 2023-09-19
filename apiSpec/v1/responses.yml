@@ -7,6 +7,9 @@
         properties:
           success:
             type: boolean
+          code:
+            type: string
+            description: spotify_access_revoked
           message:
             type: string
             description: Error message

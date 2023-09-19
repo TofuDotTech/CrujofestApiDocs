@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Crujofest API
-  version: '1.0'
+  version: 1.1.0
 servers:
   - url: https://crujofest.party/api/v1
 paths:
@@ -376,6 +376,105 @@ paths:
                 $ref: '#/components/schemas/successSchema'
         '401':
           $ref: '#/components/responses/401'
+  /parties/{partyCode}/current_song/:
+    parameters:
+      - $ref: '#/components/parameters/partyCodeParam'
+    post:
+      summary: Notify the server that the currently playing song has changed
+      description: Notify the server that the currently playing song has changed
+      tags:
+        - Parties
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                songUri:
+                  type: string
+                  description: Spotify song URI
+                queuePointer:
+                  type: number
+                  description: Pointer to the current song in the queue
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '204':
+          description: User is not in a party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          description: User possibly revoked crujofest access to spotify or isn't the host
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  code:
+                    type: string
+                    description: spotify_access_revoked or user_not_host
+                  message:
+                    type: string
+                    description: Error message
+    patch:
+      summary: Notify the server that the currently playing song was paused or resumed
+      description: Notify the server that the currently playing song was paused or resumed
+      tags:
+        - Parties
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                flag:
+                  type: boolean
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '204':
+          description: User is not in a party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successSchema'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          description: User possibly revoked crujofest access to spotify or isn't the host
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  code:
+                    type: string
+                    description: spotify_access_revoked or user_not_host
+                  message:
+                    type: string
+                    description: Error message
   /roles:
     description: Requires authentication
     get:
@@ -1319,6 +1418,9 @@ components:
             properties:
               success:
                 type: boolean
+              code:
+                type: string
+                description: spotify_access_revoked
               message:
                 type: string
                 description: Error message

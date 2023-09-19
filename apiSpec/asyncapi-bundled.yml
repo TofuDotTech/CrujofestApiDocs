@@ -1,7 +1,7 @@
 asyncapi: 2.5.0
 info:
   title: Crujofest event-driven API
-  version: '1.0'
+  version: '2.0'
   description: Event-driven architecture implemented with sockets for party features
 servers:
   production:
@@ -60,21 +60,6 @@ channels:
                       $ref: '#/channels/~1/subscribe/message/oneOf/0/payload'
                   queuePointer:
                     type: number
-          - description: Notify the server that the currently playing song has changed
-            name: songChanged
-            payload:
-              oneOf:
-                - type: string
-                  description: Spotify song URI
-                - type: number
-                  description: queuePointer
-          - description: >-
-              Notify the server that the currently playing song was paused or
-              resumed
-            name: paused
-            payload:
-              type: boolean
-              description: flag
     subscribe:
       description: Server to client events
       message:
