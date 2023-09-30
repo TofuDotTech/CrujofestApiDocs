@@ -32,6 +32,7 @@ channels:
           - $ref: ./events/subscribe.events.yml#/deleteUser
           - $ref: ./events/subscribe.events.yml#/deleteParty
           - $ref: ./events/subscribe.events.yml#/changeRole
+          - $ref: ./events/subscribe.events.yml#/finishQueue
     bindings:
       ws:
         query:

@@ -202,6 +202,8 @@ channels:
                   type: string
                 newRole:
                   type: number
+          - name: finishQueue
+            description: Notify client that the queue has finished
     bindings:
       ws:
         query:

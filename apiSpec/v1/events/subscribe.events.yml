@@ -58,3 +58,6 @@ changeRole:
         type: string
       newRole:
         type: number
+finishQueue:
+  name: finishQueue
+  description: Notify client that the queue has finished
