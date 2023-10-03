@@ -5,8 +5,6 @@ get:
   description: Supports guest user. Gets a specific user info given his username
   tags:
     - Users
-  security:
-    - BearerAuth: []
   responses:
     "204":
       description: User does not exists
@@ -31,14 +29,9 @@ get:
                     type: string
                   username:
                     type: string
-                  email:
-                    type: string
                   photo:
                     type: string
                     description: Photo URL
-                  birthdate:
-                    type: string
-                    description: YYYY-MM-DD
                   source:
                     type: number
                     description: 0-classic 1-spotify
