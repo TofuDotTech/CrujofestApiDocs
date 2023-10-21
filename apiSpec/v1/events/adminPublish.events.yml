@@ -1,11 +1,13 @@
 addUser:
   name: addUser
+  title: addUser
   description: Add user to party users list
   payload:
     type: string
     description: partyCode
 deleteUser:
   name: deleteUser
+  title: deleteUser
   description: Delete user from users list
   payload:
     type: array
@@ -16,12 +18,14 @@ deleteUser:
         description: partyCode
 deleteParty:
   name: deleteParty
+  title: deleteParty
   description: Delete party
   payload:
     type: string
     description: partyCode
 roleChanged:
   name: roleChanged
+  title: roleChanged
   description: Notify that the user's role has changed
   payload:
     type: array
@@ -34,6 +38,7 @@ roleChanged:
         description: partyCode
 createParty:
   name: createParty
+  title: createParty
   description: Create queue pointer
   payload:
     type: string

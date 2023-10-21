@@ -17,19 +17,25 @@ channels:
               Leave the room associated to the party and disconnects the socket
               connection
             name: leaveParty
+            title: leaveParty
             payload:
               type: string
               description: Party code
           - description: Resume the currently playing song
             name: play
+            title: play
           - description: Pause the currently playing song
             name: pause
+            title: pause
           - description: Play the next song in the queue
             name: next
+            title: next
           - description: Play the previous song in the queue
             name: previous
+            title: previous
           - description: Get current song playing. Returns null if no song is playing
             name: currentSong
+            title: currentSong
             x-ack:
               args:
                 type: object
@@ -42,11 +48,13 @@ channels:
                       #/channels/~1/subscribe/message/oneOf/1/payload/oneOf/0/properties/song
           - description: Add a song to the queue
             name: querySong
+            title: querySong
             payload:
               type: string
               description: query
           - description: Get queue
             name: getQueue
+            title: getQueue
             x-ack:
               args:
                 type: object
@@ -65,6 +73,7 @@ channels:
       message:
         oneOf:
           - name: pushSong
+            title: pushSong
             description: Notify client that a new song was pushed to the queue
             payload:
               type: object
@@ -93,6 +102,7 @@ channels:
                 album:
                   type: string
           - name: changeSong
+            title: changeSong
             description: Notify client to change currently playing song
             payload:
               oneOf:
@@ -162,6 +172,7 @@ channels:
                 - type: string
                   description: value of null
           - name: changePausedState
+            title: changePausedState
             description: >-
               Notify client that the currently playing song was paused or
               resumed
@@ -169,6 +180,7 @@ channels:
               type: boolean
               description: flag
           - name: addUser
+            title: addUser
             description: Add user to party users list
             payload:
               type: object
@@ -185,13 +197,16 @@ channels:
                 isGuest:
                   type: boolean
           - name: deleteUser
+            title: deleteUser
             description: Delete user from party users list
             payload:
               type: string
               description: username
           - name: deleteParty
+            title: deleteParty
             description: Notify client that the party was deleted
           - name: changeRole
+            title: changeRole
             description: Notify to client that the user's role has changed
             payload:
               type: object
@@ -201,6 +216,7 @@ channels:
                 newRole:
                   type: number
           - name: finishQueue
+            title: finishQueue
             description: Notify client that the queue has finished
     bindings:
       ws:
@@ -222,11 +238,13 @@ channels:
       message:
         oneOf:
           - name: addUser
+            title: addUser
             description: Add user to party users list
             payload:
               type: string
               description: partyCode
           - name: deleteUser
+            title: deleteUser
             description: Delete user from users list
             payload:
               type: array
@@ -236,11 +254,13 @@ channels:
                 - type: string
                   description: partyCode
           - name: deleteParty
+            title: deleteParty
             description: Delete party
             payload:
               type: string
               description: partyCode
           - name: roleChanged
+            title: roleChanged
             description: Notify that the user's role has changed
             payload:
               type: array
@@ -252,6 +272,7 @@ channels:
                 - type: string
                   description: partyCode
           - name: createParty
+            title: createParty
             description: Create queue pointer
             payload:
               type: string
