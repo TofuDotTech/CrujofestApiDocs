@@ -405,7 +405,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
+                type: object
+                properties:
+                  song:
+                    $ref: '#/components/schemas/currentSongSchema'
         '204':
           description: User is not in a party
           content:

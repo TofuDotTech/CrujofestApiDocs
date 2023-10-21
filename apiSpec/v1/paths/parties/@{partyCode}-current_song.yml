@@ -32,7 +32,10 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../../schemas.yml#/successSchema"
+            type: object
+            properties:
+              song:
+                $ref: ../../schemas.yml#/currentSongSchema
     "403":
       description: User possibly revoked crujofest access to spotify or isn't the host
       content:
