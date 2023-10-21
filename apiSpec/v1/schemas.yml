@@ -21,8 +21,6 @@ loggedSchema:
 currentSongSchema:
   type: object
   properties:
-    success:
-      type: boolean
     isPlaying:
       type: boolean
     album:

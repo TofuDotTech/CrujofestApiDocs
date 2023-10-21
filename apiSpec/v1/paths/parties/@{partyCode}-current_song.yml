@@ -34,6 +34,8 @@ post:
           schema:
             type: object
             properties:
+              success:
+                type: boolean
               song:
                 $ref: ../../schemas.yml#/currentSongSchema
     "403":

@@ -101,8 +101,6 @@ channels:
                     song:
                       type: object
                       properties:
-                        success:
-                          type: boolean
                         isPlaying:
                           type: boolean
                         album:
