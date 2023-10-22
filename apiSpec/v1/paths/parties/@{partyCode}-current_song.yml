@@ -17,9 +17,6 @@ post:
             songUri:
               type: string
               description: Spotify song URI
-            queuePointer:
-              type: number
-              description: Pointer to the current song in the queue
   responses:
     "204":
       description: User is not in a party
@@ -38,6 +35,9 @@ post:
                 type: boolean
               song:
                 $ref: ../../schemas.yml#/currentSongSchema
+              queuePointer:
+                type: number
+                description: Pointer to the current song in the queue
     "403":
       description: User possibly revoked crujofest access to spotify or isn't the host
       content:

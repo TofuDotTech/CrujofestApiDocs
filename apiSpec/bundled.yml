@@ -396,9 +396,6 @@ paths:
                 songUri:
                   type: string
                   description: Spotify song URI
-                queuePointer:
-                  type: number
-                  description: Pointer to the current song in the queue
       responses:
         '200':
           description: Successful request
@@ -411,6 +408,9 @@ paths:
                     type: boolean
                   song:
                     $ref: '#/components/schemas/currentSongSchema'
+                  queuePointer:
+                    type: number
+                    description: Pointer to the current song in the queue
         '204':
           description: User is not in a party
           content:
