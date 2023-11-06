@@ -16,14 +16,16 @@ post:
               type: string
   responses:
     "401":
-      description: Unauthorized
+      description: "unauthorized: Incorrect password or username"
       content:
         application/json:
           schema:
-            $ref: "../../schemas.yml#/successSchema"
+            $ref: "../../schemas.yml#/errorSchema"
     "200":
       description: Successful request
       content:
         application/json:
           schema:
             $ref: "../../schemas.yml#/loggedSchema"
+    "500":
+      $ref: "../../responses.yml#/500"

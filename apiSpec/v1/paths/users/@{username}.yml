@@ -6,12 +6,12 @@ get:
   tags:
     - Users
   responses:
-    "204":
-      description: User does not exists
+    "404":
+      description: not_found - User not found
       content:
         application/json:
           schema:
-            $ref: "../../schemas.yml#/successSchema"
+            $ref: "../../schemas.yml#/errorSchema"
     "200":
       description: Successful request
       content:
@@ -19,9 +19,6 @@ get:
           schema:
             type: object
             properties:
-              success:
-                type: boolean
-                description: Success status
               user:
                 type: object
                 properties:
@@ -42,7 +39,5 @@ get:
                   isGuest:
                     type: boolean
                     description: Is a temporal user just for a party
-    "403":
-      $ref: "../../responses.yml#/403"
-    "401":
-      $ref: "../../responses.yml#/401"
+    "500":
+      $ref: "../../responses.yml#/500"

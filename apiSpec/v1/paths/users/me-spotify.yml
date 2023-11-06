@@ -17,34 +17,31 @@ patch:
               description: Spotify provided code
             redirectUri:
               type: string
-              description: Valid redirect uri depending on where the client is authenticating
+              description: Valid redirect uri depending on where the client is
+                authenticating
   responses:
-    "401":
-      description: User does not have source 0 (classic)
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
-    "209":
-      description: User is connected to a spotify account
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
-    "210":
-      description: Spotify account is connected to other user
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
-    "200":
-      description: Successful request
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
     "403":
-      $ref: "../../responses.yml#/403"
+      description: user_not_classic - Can't connect spotify account if user is
+        not classic
+        spotify_access_revoked
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/errorSchema"
+    "409":
+      description: |
+        user_connected - User is connected to a spotify account
+        account_connected - Other user has this spotify account connected
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/errorSchema"
+    "204":
+      $ref: "../../responses.yml#/204"
+    "500":
+      $ref: "../../responses.yml#/500"
+    "401":
+      $ref: "../../responses.yml#/401"
 delete:
   summary: Logs out of connected spotify account
   description: Logs out of connected spotify account for classic user
@@ -53,17 +50,17 @@ delete:
   security:
     - BearerAuth: []
   responses:
-    "401":
-      description: User does not have source 0 (classic) or does not have a connected spotify account
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
-    "200":
-      description: Successful request
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
     "403":
-      $ref: "../../responses.yml#/403"
+      description: errror_logout - User does not have source 0 (classic) or does
+        not have a connected spotify account
+        spotify_access_revoked
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/errorSchema"
+    "204":
+      $ref: "../../responses.yml#/204"
+    "500":
+      $ref: "../../responses.yml#/500"
+    "401":
+      $ref: "../../responses.yml#/401"

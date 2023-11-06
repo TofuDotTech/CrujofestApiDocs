@@ -15,12 +15,10 @@ patch:
             photo:
               type: string
   responses:
-    "200":
-      description: Successful request
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
+    "204":
+      $ref: "../../responses.yml#/204"
+    "500":
+      $ref: "../../responses.yml#/500"
     "403":
       $ref: "../../responses.yml#/403"
     "401":

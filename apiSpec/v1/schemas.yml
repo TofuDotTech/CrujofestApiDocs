@@ -1,16 +1,15 @@
-successSchema:
+errorSchema:
   type: object
   properties:
-    success:
-      type: boolean
-      description: Success status
+    code:
+      type: string
+      description: error code
+    message:
+      type: string
+      description: error message
 loggedSchema:
   type: object
   properties:
-    success:
-      type: boolean
-      enum: [true]
-      description: Success status
     token:
       type: string
       description: JWT token generated

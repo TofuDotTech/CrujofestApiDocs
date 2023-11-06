@@ -1,4 +1,4 @@
-#Auth
+# Auth
 /auth/login:
   $ref: ./auth/login.yml
 /auth/register:
@@ -8,27 +8,27 @@
 /auth/spotify_register:
   $ref: ./auth/spotify_register.yml
 
-#Parties
+# Parties
 /parties/invites/{inviteId}:
   $ref: ./parties/invites-@{inviteId}.yml
 /parties/invites:
   $ref: ./parties/invites.yml
 /parties:
   $ref: ./parties/root.yml
-/parties/{partyCode}/users/:
+/parties/{partyCode}/users:
   $ref: ./parties/@{partyCode}-users.yml
-/parties/{partyCode}/current_song/:
+/parties/{partyCode}/current_song:
   $ref: ./parties/@{partyCode}-current_song.yml
 
-#Roles
+# Roles
 /roles:
   $ref: ./roles/root.yml
 
-#Themes
+# Themes
 /themes:
   $ref: ./themes/root.yml
 
-#Users
+# Users
 /users/{username}/role:
   $ref: ./users/@{username}-role.yml
 /users/{username}/verify:
@@ -60,6 +60,6 @@
 /users/account/password:
   $ref: ./users/account-password.yml
 
-#Misc
+# Misc
 /password-reset:
   $ref: ./password-reset.yml

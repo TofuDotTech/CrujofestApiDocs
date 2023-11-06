@@ -30,11 +30,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/loggedSchema'
         '401':
-          description: Unauthorized
+          description: 'unauthorized: Incorrect password or username'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /auth/register:
     post:
       summary: Registers a new user
@@ -69,18 +71,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loggedSchema'
-        '204':
-          description: Not invited to Crujofest (only in beta)
+        '404':
+          description: invite_not_found - BETA ONLY. Invite not found"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
-        '210':
-          description: Username exists
+                $ref: '#/components/schemas/errorSchema'
+        '409':
+          description: username_exists
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /auth/spotify_auth:
     post:
       summary: Authenticates a user with spotify
@@ -102,33 +106,56 @@ paths:
                   description: valid redirect uri depending on where the client is authenticating
       responses:
         '200':
-          description: Successful request
+          description: 'Successful request. Codes: login, register'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/loggedSchema'
-        '204':
-          description: Not invited to Crujofest (only in beta)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
+                oneOf:
+                  - type: object
+                    properties:
+                      code:
+                        type: string
+                        enum:
+                          - register
+                        description: User registration
+                      accessToken:
+                        type: string
+                        description: spotify access token required for spotify registration request
+                      refreshToken:
+                        description: spotify refresh toekn required for spotify registration request
+                        type: string
+                      expiresIn:
+                        description: spotify expiration in seconds required for spotify registration request
+                        type: number
+                  - type: object
+                    properties:
+                      code:
+                        type: string
+                        enum:
+                          - login
+                        description: User login
+                      token:
+                        type: string
+                        description: JWT token generated
+                      expiresIn:
+                        type: string
+                        enum:
+                          - 15d
+                        description: Token expiration time
         '400':
-          description: User registration
+          description: 'spotify_no_email: Spotify user has no email'
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  accessToken:
-                    type: string
-                    description: spotify access token required for spotify registration request
-                  refreshToken:
-                    description: spotify refresh toekn required for spotify registration request
-                    type: string
-                  expiresIn:
-                    description: spotify expiration in seconds required for spotify registration request
-                    type: number
+                $ref: '#/components/schemas/errorSchema'
+        '404':
+          description: Not invited to Crujofest (only in beta). invite_not_found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /auth/spotify_register:
     post:
       summary: Registers a user with spotify
@@ -164,12 +191,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loggedSchema'
-        '210':
-          description: Username exists
+        '409':
+          description: username_exists
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /parties/invites/{inviteId}:
     parameters:
       - name: inviteId
@@ -185,28 +214,26 @@ paths:
       security:
         - BearerAuth: []
       responses:
-        '200':
-          description: Successful request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
         '204':
-          description: Invite not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
-        '209':
-          description: User is already in a party
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
+          $ref: '#/components/responses/204'
         '401':
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+        '404':
+          description: invite_not_found - Party invite not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
+        '409':
+          description: in_party - User is already in a party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /parties/invites:
     get:
       summary: Returns all invites to the user
@@ -223,9 +250,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  success:
-                    type: boolean
-                    description: Success status
                   invites:
                     type: array
                     items:
@@ -246,6 +270,8 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
     post:
       summary: Invites various users to the party
       description: Invites various users to the party
@@ -265,26 +291,26 @@ paths:
                   items:
                     type: string
       responses:
-        '200':
-          description: Successful request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
         '204':
-          description: User is not in a party
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
+          $ref: '#/components/responses/204'
         '401':
-          description: User does not have the correct role
+          $ref: '#/components/responses/401'
+        '403':
+          description: |
+            not_correct_role - User does not have the correct role
+            spotify_access_revoked
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
-        '403':
-          $ref: '#/components/responses/403'
+                $ref: '#/components/schemas/errorSchema'
+        '409':
+          description: not_in_party - User is not in a party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /parties:
     post:
       summary: Creates a new party
@@ -317,23 +343,21 @@ paths:
                   playlistId:
                     type: string
                     description: Spotify playlist id associated with the party
-        '204':
-          description: User is not connected to spotify
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
-        '209':
-          description: User is already in a party
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
         '401':
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
-  /parties/{partyCode}/users/:
+        '409':
+          description: |
+            "in_party: User is in a party
+              not_connected_spotify: User is not connected to spotify"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
+  /parties/{partyCode}/users:
     parameters:
       - $ref: '#/components/parameters/partyCodeParam'
     get:
@@ -368,15 +392,19 @@ paths:
                           nullable: true
                         isGuest:
                           type: boolean
-        '204':
-          description: User is not in a party
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '409':
+          description: not_in_party - User is not in a party
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
-        '401':
-          $ref: '#/components/responses/401'
-  /parties/{partyCode}/current_song/:
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
+  /parties/{partyCode}/current_song:
     parameters:
       - $ref: '#/components/parameters/partyCodeParam'
     post:
@@ -404,36 +432,21 @@ paths:
               schema:
                 type: object
                 properties:
-                  success:
-                    type: boolean
                   song:
                     $ref: '#/components/schemas/currentSongSchema'
                   queuePointer:
                     type: number
                     description: Pointer to the current song in the queue
-        '204':
-          description: User is not in a party
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
-        '401':
-          $ref: '#/components/responses/401'
         '403':
-          description: User possibly revoked crujofest access to spotify or isn't the host
+          description: |
+            not_in_party - User is not in a party
+            user_not_host - User is not the host of the party
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  code:
-                    type: string
-                    description: spotify_access_revoked or user_not_host
-                  message:
-                    type: string
-                    description: Error message
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
     patch:
       summary: Notify the server that the currently playing song was paused or resumed
       description: Notify the server that the currently playing song was paused or resumed
@@ -451,35 +464,18 @@ paths:
                 flag:
                   type: boolean
       responses:
-        '200':
-          description: Successful request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
         '204':
-          description: User is not in a party
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
-        '401':
-          $ref: '#/components/responses/401'
+          $ref: '#/components/responses/204'
         '403':
-          description: User isn't the host
+          description: |
+            not_in_party - User is not in a party
+            user_not_host - User is not the host of the party
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  code:
-                    type: string
-                    description: user_not_host
-                  message:
-                    type: string
-                    description: Error message
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /roles:
     description: Requires authentication
     get:
@@ -497,9 +493,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  success:
-                    type: boolean
-                    description: Success status
                   roles:
                     type: array
                     items:
@@ -513,6 +506,8 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
   /themes:
     description: Requires authentication
     get:
@@ -530,9 +525,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  success:
-                    type: boolean
-                    description: Success status
                   roles:
                     type: array
                     items:
@@ -546,6 +538,8 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
   /users/{username}/role:
     parameters:
       - $ref: '#/components/parameters/usernameParam'
@@ -567,26 +561,26 @@ paths:
                   type: number
                   description: new role for user
       responses:
-        '200':
-          description: Successful request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
         '204':
-          description: User is not in a party
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
+          $ref: '#/components/responses/204'
         '401':
-          description: User does not have the correct role
+          $ref: '#/components/responses/401'
+        '403':
+          description: |
+            not_correct_role - User does not have the correct role
+            spotify_access_revoked
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
-        '403':
-          $ref: '#/components/responses/403'
+                $ref: '#/components/schemas/errorSchema'
+        '409':
+          description: not_in_party - User is not in a party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /users/{username}/verify:
     parameters:
       - $ref: '#/components/parameters/usernameParam'
@@ -596,12 +590,16 @@ paths:
       tags:
         - Users
       responses:
-        '200':
-          description: Successful request
+        '204':
+          $ref: '#/components/responses/204'
+        '404':
+          description: user_not_found - User with that email not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /users/{username}:
     parameters:
       - $ref: '#/components/parameters/usernameParam'
@@ -618,9 +616,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  success:
-                    type: boolean
-                    description: Success status
                   user:
                     type: object
                     properties:
@@ -641,16 +636,14 @@ paths:
                       isGuest:
                         type: boolean
                         description: Is a temporal user just for a party
-        '204':
-          description: User does not exists
+        '404':
+          description: not_found - User not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /users/guest/party:
     patch:
       summary: Joins a temporal user to a party by URL
@@ -675,12 +668,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loggedSchema'
-        '204':
-          description: Party does not exist
+        '404':
+          description: party_not_found - Party not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /users/invites:
     post:
       summary: Sends an email invitation to register to Crujofest
@@ -701,30 +696,30 @@ paths:
                   type: string
                   description: email to send invitation
       responses:
-        '200':
-          description: Successful request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
         '204':
-          description: Username not found
+          $ref: '#/components/responses/204'
+        '404':
+          description: user_not_found - User not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
-        '210':
-          description: Email is registered or invited
+                $ref: '#/components/schemas/errorSchema'
+        '409':
+          description: |
+            email_registered - There is already an account with this email
+            email_invited - This email has already been invited
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
-        '401':
-          description: Invitations per user limit reached
+                $ref: '#/components/schemas/errorSchema'
+        '429':
+          description: invitations_limit_reached - The number of invites allowed by this user has already been reached
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /users/me/invites:
     get:
       summary: Gets the number of invites redeemed
@@ -741,15 +736,14 @@ paths:
               schema:
                 type: object
                 properties:
-                  success:
-                    type: boolean
-                    description: Success status
                   redeemed:
                     type: number
         '401':
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
   /users/me/party:
     get:
       summary: Returns current party
@@ -766,9 +760,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  success:
-                    type: boolean
-                    description: Success status
                   partyInfo:
                     type: object
                     properties:
@@ -788,16 +779,18 @@ paths:
                             type: number
                           partyPlaylistId:
                             type: string
-        '204':
-          description: User is not in a party
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
         '401':
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+        '409':
+          description: not_in_party - User is not in a party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
     delete:
       summary: Deletes or leaves party
       description: Supports guest users. Deletes or leaves party depending on user role
@@ -812,31 +805,35 @@ paths:
           schema:
             type: string
             enum:
-              - true
-              - false
+              - 'true'
+              - 'false'
       responses:
-        '200':
-          description: Successful request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
         '204':
-          description: User is not in a party
+          $ref: '#/components/responses/204'
+        '400':
+          description: deletePlaylist_not_provided - Trying to delete party but no deletePlaylist param provided
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
-        '400':
-          description: Trying to delete party but no deletePlaylist param provided
-          content:
-            applicatoin/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
+                $ref: '#/components/schemas/errorSchema'
         '401':
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+        '404':
+          description: not_found - Party not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
+        '409':
+          description: not_in_party - User is not in a party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
     patch:
       summary: Joins a party by URL
       description: Joins a party by URL
@@ -854,28 +851,26 @@ paths:
                 partyCode:
                   type: string
       responses:
-        '200':
-          description: Successful request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
         '204':
-          description: Party does not exist
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
-        '209':
-          description: User is in a party
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
+          $ref: '#/components/responses/204'
         '401':
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+        '404':
+          description: party_not_found - Party does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
+        '409':
+          description: in_party - User is in a party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /users/me/photo:
     patch:
       summary: Uploads and updates user photo
@@ -894,16 +889,14 @@ paths:
                 photo:
                   type: string
       responses:
-        '200':
-          description: Successful request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
+        '204':
+          $ref: '#/components/responses/204'
         '401':
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
   /users/me/pswd:
     patch:
       summary: Change user password
@@ -924,26 +917,26 @@ paths:
                 newPasssword:
                   type: string
       responses:
-        '200':
-          description: Successful request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
+        '204':
+          $ref: '#/components/responses/204'
         '401':
-          description: User source is not classic
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
+          $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403'
-        '452':
-          description: old password is incorrect
+          description: |
+            password_incorrect - old password is incorrect
+            spotify_access_revoked
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
+                $ref: '#/components/schemas/errorSchema'
+        '409':
+          description: user_not_classic - User was not registered with username and password
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /users/me/spotify:
     patch:
       summary: Connects spotify to a classic account
@@ -966,32 +959,26 @@ paths:
                   type: string
                   description: Valid redirect uri depending on where the client is authenticating
       responses:
-        '200':
-          description: Successful request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
-        '209':
-          description: User is connected to a spotify account
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
-        '210':
-          description: Spotify account is connected to other user
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
+        '204':
+          $ref: '#/components/responses/204'
         '401':
-          description: User does not have source 0 (classic)
+          $ref: '#/components/responses/401'
+        '403':
+          description: user_not_classic - Can't connect spotify account if user is not classic spotify_access_revoked
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
-        '403':
-          $ref: '#/components/responses/403'
+                $ref: '#/components/schemas/errorSchema'
+        '409':
+          description: |
+            user_connected - User is connected to a spotify account
+            account_connected - Other user has this spotify account connected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
     delete:
       summary: Logs out of connected spotify account
       description: Logs out of connected spotify account for classic user
@@ -1000,20 +987,18 @@ paths:
       security:
         - BearerAuth: []
       responses:
-        '200':
-          description: Successful request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
+        '204':
+          $ref: '#/components/responses/204'
         '401':
-          description: User does not have source 0 (classic) or does not have a connected spotify account
+          $ref: '#/components/responses/401'
+        '403':
+          description: errror_logout - User does not have source 0 (classic) or does not have a connected spotify account spotify_access_revoked
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
-        '403':
-          $ref: '#/components/responses/403'
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /users/me:
     get:
       summary: Get logged user info
@@ -1030,9 +1015,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  success:
-                    type: boolean
-                    description: Success status
                   user:
                     type: object
                     properties:
@@ -1060,6 +1042,8 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
     patch:
       summary: Modifies some fields of the logged user
       description: Modifies email, displayName and birthdate of the logged user
@@ -1082,16 +1066,14 @@ paths:
                   type: string
                   description: YYYY-MM-DD
       responses:
-        '200':
-          description: Successful request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
+        '204':
+          $ref: '#/components/responses/204'
         '401':
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
     delete:
       summary: Deletes the logged user
       description: Deletes the logged user
@@ -1106,22 +1088,20 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: Successful request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
+        '204':
+          $ref: '#/components/responses/204'
         '401':
           $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403'
-        '452':
-          description: password is incorrect
+          description: |
+            password_incorrect - password is incorrect
+            spotify_access_revoked
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /users/search/{query}:
     parameters:
       - name: query
@@ -1144,9 +1124,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  success:
-                    type: boolean
-                    description: Success status
                   users:
                     type: array
                     items:
@@ -1170,6 +1147,8 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
   /users/host/spotifyToken:
     get:
       summary: Gets the party host spotify access token
@@ -1178,9 +1157,6 @@ paths:
         - Users
       security:
         - BearerAuth: []
-      parameters:
-        - name: partyCode
-          in: query
       responses:
         '200':
           description: Successful request
@@ -1191,19 +1167,18 @@ paths:
                 properties:
                   accessToken:
                     type: string
-        '204':
-          description: Host or party not found
-          content:
-            applicaton/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
         '401':
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+        '404':
+          description: not_found - Party or user not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /users/me/token:
     patch:
       summary: Refreshes the user's token
@@ -1228,6 +1203,8 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
   /users/account/password:
     post:
       summary: Sends an email to change user password
@@ -1244,18 +1221,16 @@ paths:
                 email:
                   type: string
       responses:
-        '200':
-          description: Successful request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
+        '204':
+          $ref: '#/components/responses/204'
         '401':
-          description: User associated with email was not found
+          description: unauthorized - unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /password-reset:
     patch:
       summary: Resets user password
@@ -1272,28 +1247,21 @@ paths:
                 new:
                   type: string
       responses:
-        '200':
-          description: Successful request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/successSchema'
+        '204':
+          $ref: '#/components/responses/204'
         '401':
-          description: Invalid token
+          description: unauthorized - unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/successSchema'
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
 components:
   schemas:
     loggedSchema:
       type: object
       properties:
-        success:
-          type: boolean
-          enum:
-            - true
-          description: Success status
         token:
           type: string
           description: JWT token generated
@@ -1302,12 +1270,15 @@ components:
           enum:
             - 15d
           description: Token expiration time
-    successSchema:
+    errorSchema:
       type: object
       properties:
-        success:
-          type: boolean
-          description: Success status
+        code:
+          type: string
+          description: error code
+        message:
+          type: string
+          description: error message
     currentSongSchema:
       type: object
       properties:
@@ -1398,6 +1369,13 @@ components:
       type: http
       scheme: bearer
   responses:
+    '204':
+      description: Successful request
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: OK
     '401':
       description: Unauthorized
       content:
@@ -1406,20 +1384,22 @@ components:
             type: string
             description: Unauthorized
     '403':
-      description: User possibly revoked crujofest access to spotify
+      description: spotify_access_revoked - User possibly revoked crujofest access to spotify
       content:
         application/json:
           schema:
             type: object
             properties:
-              success:
-                type: boolean
               code:
                 type: string
-                description: spotify_access_revoked
               message:
                 type: string
-                description: Error message
+    '500':
+      description: internal_error - Something went wrong. Try again later
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorSchema'
   parameters:
     partyCodeParam:
       name: partyCode

@@ -15,15 +15,17 @@ patch:
             displayName:
               type: string
   responses:
-    "204":
-      description: Party does not exist
+    "404":
+      description: party_not_found - Party not found
       content:
         application/json:
           schema:
-            $ref: "../../schemas.yml#/successSchema"
+            $ref: "../../schemas.yml#/errorSchema"
     "200":
       description: Successful request
       content:
         application/json:
           schema:
             $ref: "../../schemas.yml#/loggedSchema"
+    "500":
+      $ref: "../../responses.yml#/500"

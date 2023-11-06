@@ -32,11 +32,15 @@ get:
                       nullable: true
                     isGuest:
                       type: boolean
-    "204":
-      description: User is not in a party
+    "409":
+      description: not_in_party - User is not in a party
       content:
         application/json:
           schema:
-            $ref: "../../schemas.yml#/successSchema"
+            $ref: "../../schemas.yml#/errorSchema"
+    "500":
+      $ref: "../../responses.yml#/500"
+    "403":
+      $ref: "../../responses.yml#/403"
     "401":
       $ref: "../../responses.yml#/401"

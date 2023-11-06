@@ -6,12 +6,12 @@ get:
   security:
     - BearerAuth: []
   responses:
-    "204":
-      description: User is not in a party
+    "409":
+      description: not_in_party - User is not in a party
       content:
         application/json:
           schema:
-            $ref: "../../schemas.yml#/successSchema"
+            $ref: "../../schemas.yml#/errorSchema"
     "200":
       description: Successful request
       content:
@@ -19,9 +19,6 @@ get:
           schema:
             type: object
             properties:
-              success:
-                type: boolean
-                description: Success status
               partyInfo:
                 type: object
                 properties:
@@ -41,13 +38,16 @@ get:
                         type: number
                       partyPlaylistId:
                         type: string
+    "500":
+      $ref: "../../responses.yml#/500"
     "403":
       $ref: "../../responses.yml#/403"
     "401":
       $ref: "../../responses.yml#/401"
 delete:
   summary: Deletes or leaves party
-  description: Supports guest users. Deletes or leaves party depending on user role
+  description: Supports guest users. Deletes or leaves party depending on user
+    role
   tags:
     - Users
   security:
@@ -59,27 +59,32 @@ delete:
       schema:
         type: string
         enum:
-          - true
-          - false
+          - "true"
+          - "false"
   responses:
     "400":
-      description: Trying to delete party but no deletePlaylist param provided
+      description: deletePlaylist_not_provided - Trying to delete party but no
+        deletePlaylist param provided
       content:
-        applicatoin/json:
+        application/json:
           schema:
-            $ref: "../../schemas.yml#/successSchema"
+            $ref: "../../schemas.yml#/errorSchema"
+    "409":
+      description: not_in_party - User is not in a party
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/errorSchema"
+    "404":
+      description: not_found - Party not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/errorSchema"
     "204":
-      description: User is not in a party
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
-    "200":
-      description: Successful request
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
+      $ref: "../../responses.yml#/204"
+    "500":
+      $ref: "../../responses.yml#/500"
     "403":
       $ref: "../../responses.yml#/403"
     "401":
@@ -101,24 +106,22 @@ patch:
             partyCode:
               type: string
   responses:
-    "209":
-      description: User is in a party
+    "409":
+      description: in_party - User is in a party
       content:
         application/json:
           schema:
-            $ref: "../../schemas.yml#/successSchema"
+            $ref: "../../schemas.yml#/errorSchema"
+    "404":
+      description: party_not_found - Party does not exist
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/errorSchema"
     "204":
-      description: Party does not exist
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
-    "200":
-      description: Successful request
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
+      $ref: "../../responses.yml#/204"
+    "500":
+      $ref: "../../responses.yml#/500"
     "403":
       $ref: "../../responses.yml#/403"
     "401":

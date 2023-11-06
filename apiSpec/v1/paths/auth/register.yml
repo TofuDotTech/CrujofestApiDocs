@@ -15,7 +15,8 @@ post:
               description: Between 6-30 characters and no special characters
             password:
               type: string
-              description: Between 8-16 characters, uppercase and lowercase letters
+              description: Between 8-16 characters,
+                uppercase and lowercase letters
             displayName:
               type: string
               description: Between 6-30 characters and no special characters
@@ -25,21 +26,23 @@ post:
               type: string
               description: "YYYY-MM-DD"
   responses:
-    "204":
-      description: Not invited to Crujofest (only in beta)
+    "404":
+      description: invite_not_found - BETA ONLY. Invite not found"
       content:
         application/json:
           schema:
-            $ref: "../../schemas.yml#/successSchema"
-    "210":
-      description: Username exists
+            $ref: "../../schemas.yml#/errorSchema"
+    "409":
+      description: username_exists
       content:
         application/json:
           schema:
-            $ref: "../../schemas.yml#/successSchema"
+            $ref: "../../schemas.yml#/errorSchema"
     "200":
       description: Successful request
       content:
         application/json:
           schema:
             $ref: "../../schemas.yml#/loggedSchema"
+    "500":
+      $ref: "../../responses.yml#/500"

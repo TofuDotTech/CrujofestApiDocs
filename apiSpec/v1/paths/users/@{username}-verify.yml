@@ -6,9 +6,13 @@ patch:
   tags:
     - Users
   responses:
-    "200":
-      description: Successful request
+    "404":
+      description: user_not_found - User with that email not found
       content:
         application/json:
           schema:
-            $ref: "../../schemas.yml#/successSchema"
+            $ref: "../../schemas.yml#/errorSchema"
+    "204":
+      $ref: "../../responses.yml#/204"
+    "500":
+      $ref: "../../responses.yml#/500"
