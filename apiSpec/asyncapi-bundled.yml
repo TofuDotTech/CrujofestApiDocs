@@ -52,6 +52,9 @@ channels:
             payload:
               type: string
               description: query
+            x-ack:
+              message:
+                type: string
           - description: Get queue
             name: getQueue
             title: getQueue
