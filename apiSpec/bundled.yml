@@ -219,7 +219,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/responses/403withGuest'
         '404':
           description: invite_not_found - Party invite not found
           content:
@@ -269,7 +269,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/responses/403withGuest'
         '500':
           $ref: '#/components/responses/500'
     post:
@@ -299,6 +299,7 @@ paths:
           description: |
             not_correct_role - User does not have the correct role
             spotify_access_revoked
+            user_is_guest
           content:
             application/json:
               schema:
@@ -346,7 +347,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/responses/403withGuest'
         '409':
           description: |
             "in_party: User is in a party
@@ -569,6 +570,7 @@ paths:
           description: |
             not_correct_role - User does not have the correct role
             spotify_access_revoked
+            user_is_guest
           content:
             application/json:
               schema:
@@ -741,7 +743,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/responses/403withGuest'
         '500':
           $ref: '#/components/responses/500'
   /users/me/party:
@@ -856,7 +858,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/responses/403withGuest'
         '404':
           description: party_not_found - Party does not exist
           content:
@@ -894,7 +896,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/responses/403withGuest'
         '500':
           $ref: '#/components/responses/500'
   /users/me/pswd:
@@ -925,6 +927,7 @@ paths:
           description: |
             password_incorrect - old password is incorrect
             spotify_access_revoked
+            user_is_guest
           content:
             application/json:
               schema:
@@ -964,7 +967,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '403':
-          description: user_not_classic - Can't connect spotify account if user is not classic spotify_access_revoked
+          description: user_not_classic - Can't connect spotify account if user is not classic spotify_access_revoked user_is_guest
           content:
             application/json:
               schema:
@@ -992,7 +995,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '403':
-          description: errror_logout - User does not have source 0 (classic) or does not have a connected spotify account spotify_access_revoked
+          description: errror_logout - User does not have source 0 (classic) or does not have a connected spotify account spotify_access_revoked user_is_guest
           content:
             application/json:
               schema:
@@ -1071,7 +1074,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/responses/403withGuest'
         '500':
           $ref: '#/components/responses/500'
     delete:
@@ -1096,6 +1099,7 @@ paths:
           description: |
             password_incorrect - password is incorrect
             spotify_access_revoked
+            user_is_guest
           content:
             application/json:
               schema:
@@ -1400,6 +1404,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/errorSchema'
+    403withGuest:
+      description: |
+        spotify_access_revoked - User possibly revoked crujofest access to
+        spotify
+        user_is_guest - Guest users cannot perform this action
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
   parameters:
     partyCodeParam:
       name: partyCode

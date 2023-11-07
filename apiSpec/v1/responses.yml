@@ -11,6 +11,20 @@
             type: string
           message:
             type: string
+"403withGuest":
+  description: |
+    spotify_access_revoked - User possibly revoked crujofest access to
+    spotify
+    user_is_guest - Guest users cannot perform this action
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          code:
+            type: string
+          message:
+            type: string
 "401":
   description: Unauthorized
   content:

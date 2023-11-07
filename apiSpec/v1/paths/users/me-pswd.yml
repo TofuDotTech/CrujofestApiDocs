@@ -28,6 +28,7 @@ patch:
       description: |
         password_incorrect - old password is incorrect
         spotify_access_revoked
+        user_is_guest
       content:
         application/json:
           schema:

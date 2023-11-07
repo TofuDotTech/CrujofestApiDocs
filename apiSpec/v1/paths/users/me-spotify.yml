@@ -24,6 +24,7 @@ patch:
       description: user_not_classic - Can't connect spotify account if user is
         not classic
         spotify_access_revoked
+        user_is_guest
       content:
         application/json:
           schema:
@@ -54,6 +55,7 @@ delete:
       description: errror_logout - User does not have source 0 (classic) or does
         not have a connected spotify account
         spotify_access_revoked
+        user_is_guest
       content:
         application/json:
           schema:

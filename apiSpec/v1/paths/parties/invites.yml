@@ -32,7 +32,7 @@ get:
     "500":
       $ref: "../../responses.yml#/500"
     "403":
-      $ref: "../../responses.yml#/403"
+      $ref: "../../responses.yml#/403withGuest"
     "401":
       $ref: "../../responses.yml#/401"
 post:
@@ -64,6 +64,7 @@ post:
       description: |
         not_correct_role - User does not have the correct role
         spotify_access_revoked
+        user_is_guest
       content:
         application/json:
           schema:

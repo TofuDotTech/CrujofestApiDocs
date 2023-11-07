@@ -22,6 +22,7 @@ patch:
       description: |
         not_correct_role - User does not have the correct role
         spotify_access_revoked
+        user_is_guest
       content:
         application/json:
           schema:
