@@ -218,6 +218,9 @@ channels:
           - name: finishQueue
             title: finishQueue
             description: Notify client that the queue has finished
+          - name: resumeParty
+            title: resumeParty
+            description: Notify host that a new song was added after the queue finished
     bindings:
       ws:
         query:
