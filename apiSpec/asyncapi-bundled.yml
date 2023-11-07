@@ -52,6 +52,10 @@ channels:
             payload:
               type: string
               description: query
+            x-ack:
+              message:
+                type: string
+                description: repeated_song or success
           - description: Get queue
             name: getQueue
             title: getQueue
@@ -218,6 +222,9 @@ channels:
           - name: finishQueue
             title: finishQueue
             description: Notify client that the queue has finished
+          - name: resumeParty
+            title: resumeParty
+            description: Notify host that a new song was added after the queue finished
     bindings:
       ws:
         query:

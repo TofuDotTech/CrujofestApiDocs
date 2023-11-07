@@ -12,25 +12,23 @@ patch:
   security:
     - BearerAuth: []
   responses:
-    "209":
-      description: User is already in a party
+    "409":
+      description: in_party - User is already in a party
       content:
         application/json:
           schema:
-            $ref: "../../schemas.yml#/successSchema"
+            $ref: "../../schemas.yml#/errorSchema"
+    "404":
+      description: invite_not_found - Party invite not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/errorSchema"
     "204":
-      description: Invite not found
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
-    "200":
-      description: Successful request
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
+      $ref: "../../responses.yml#/204"
+    "500":
+      $ref: "../../responses.yml#/500"
     "403":
-      $ref: "../../responses.yml#/403"
+      $ref: "../../responses.yml#/403withGuest"
     "401":
       $ref: "../../responses.yml#/401"

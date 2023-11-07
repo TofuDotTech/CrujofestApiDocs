@@ -13,9 +13,6 @@ get:
           schema:
             type: object
             properties:
-              success:
-                type: boolean
-                description: Success status
               invites:
                 type: array
                 items:
@@ -32,8 +29,10 @@ get:
                       properties:
                         partyName:
                           type: string
+    "500":
+      $ref: "../../responses.yml#/500"
     "403":
-      $ref: "../../responses.yml#/403"
+      $ref: "../../responses.yml#/403withGuest"
     "401":
       $ref: "../../responses.yml#/401"
 post:
@@ -55,23 +54,24 @@ post:
               items:
                 type: string
   responses:
-    "204":
-      description: User is not in a party
+    "409":
+      description: not_in_party - User is not in a party
       content:
         application/json:
           schema:
-            $ref: "../../schemas.yml#/successSchema"
-    "401":
-      description: User does not have the correct role
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
-    "200":
-      description: Successful request
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
+            $ref: "../../schemas.yml#/errorSchema"
     "403":
-      $ref: "../../responses.yml#/403"
+      description: |
+        not_correct_role - User does not have the correct role
+        spotify_access_revoked
+        user_is_guest
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/errorSchema"
+    "204":
+      $ref: "../../responses.yml#/204"
+    "500":
+      $ref: "../../responses.yml#/500"
+    "401":
+      $ref: "../../responses.yml#/401"

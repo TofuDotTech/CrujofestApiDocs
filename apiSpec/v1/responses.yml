@@ -1,18 +1,30 @@
 "403":
-  description: User possibly revoked crujofest access to spotify
+  description:
+    spotify_access_revoked - User possibly revoked crujofest access to
+    spotify
   content:
     application/json:
       schema:
         type: object
         properties:
-          success:
-            type: boolean
           code:
             type: string
-            description: spotify_access_revoked
           message:
             type: string
-            description: Error message
+"403withGuest":
+  description: |
+    spotify_access_revoked - User possibly revoked crujofest access to
+    spotify
+    user_is_guest - Guest users cannot perform this action
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          code:
+            type: string
+          message:
+            type: string
 "401":
   description: Unauthorized
   content:
@@ -20,3 +32,16 @@
       schema:
         type: string
         description: Unauthorized
+"204":
+  description: Successful request
+  content:
+    text/plain:
+      schema:
+        type: string
+        example: OK
+"500":
+  description: internal_error - Something went wrong. Try again later
+  content:
+    application/json:
+      schema:
+        $ref: "./schemas.yml#/errorSchema"

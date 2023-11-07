@@ -17,6 +17,8 @@ patch:
                 type: string
               expiresIn:
                 type: string
+    "500":
+      $ref: "../../responses.yml#/500"
     "403":
       $ref: "../../responses.yml#/403"
     "401":

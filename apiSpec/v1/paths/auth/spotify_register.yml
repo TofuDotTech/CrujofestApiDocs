@@ -26,15 +26,17 @@ post:
             expiresIn:
               type: number
   responses:
-    "210":
-      description: Username exists
+    "409":
+      description: username_exists
       content:
         application/json:
           schema:
-            $ref: "../../schemas.yml#/successSchema"
+            $ref: "../../schemas.yml#/errorSchema"
     "200":
       description: Successful request
       content:
         application/json:
           schema:
             $ref: "../../schemas.yml#/loggedSchema"
+    "500":
+      $ref: "../../responses.yml#/500"

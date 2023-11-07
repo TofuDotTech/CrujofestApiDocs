@@ -13,9 +13,6 @@ get:
           schema:
             type: object
             properties:
-              success:
-                type: boolean
-                description: Success status
               user:
                 type: object
                 properties:
@@ -39,6 +36,8 @@ get:
                     type: number
                   spotifyUserId:
                     type: string
+    "500":
+      $ref: "../../responses.yml#/500"
     "403":
       $ref: "../../responses.yml#/403"
     "401":
@@ -65,14 +64,12 @@ patch:
               type: string
               description: YYYY-MM-DD
   responses:
-    "200":
-      description: Successful request
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
+    "204":
+      $ref: "../../responses.yml#/204"
+    "500":
+      $ref: "../../responses.yml#/500"
     "403":
-      $ref: "../../responses.yml#/403"
+      $ref: "../../responses.yml#/403withGuest"
     "401":
       $ref: "../../responses.yml#/401"
 delete:
@@ -89,19 +86,18 @@ delete:
       schema:
         type: string
   responses:
-    "452":
-      description: password is incorrect
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
-    "200":
-      description: Successful request
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
     "403":
-      $ref: "../../responses.yml#/403"
+      description: |
+        password_incorrect - password is incorrect
+        spotify_access_revoked
+        user_is_guest
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/errorSchema"
+    "204":
+      $ref: "../../responses.yml#/204"
+    "500":
+      $ref: "../../responses.yml#/500"
     "401":
       $ref: "../../responses.yml#/401"

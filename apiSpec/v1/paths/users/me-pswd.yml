@@ -17,23 +17,25 @@ patch:
             newPasssword:
               type: string
   responses:
-    "401":
-      description: User source is not classic
+    "409":
+      description: user_not_classic - User was not registered with username and
+        password
       content:
         application/json:
           schema:
-            $ref: "../../schemas.yml#/successSchema"
-    "452":
-      description: old password is incorrect
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
-    "200":
-      description: Successful request
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/successSchema"
+            $ref: "../../schemas.yml#/errorSchema"
     "403":
-      $ref: "../../responses.yml#/403"
+      description: |
+        password_incorrect - old password is incorrect
+        spotify_access_revoked
+        user_is_guest
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/errorSchema"
+    "204":
+      $ref: "../../responses.yml#/204"
+    "500":
+      $ref: "../../responses.yml#/500"
+    "401":
+      $ref: "../../responses.yml#/401"

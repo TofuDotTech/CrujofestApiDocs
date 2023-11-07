@@ -5,9 +5,6 @@ get:
     - Users
   security:
     - BearerAuth: []
-  parameters:
-    - name: partyCode
-      in: query
   responses:
     "200":
       description: Successful request
@@ -18,15 +15,14 @@ get:
             properties:
               accessToken:
                 type: string
-    "204":
-      description: Host or party not found
+    "404":
+      description: not_found - Party or user not found
       content:
-        applicaton/json:
+        application/json:
           schema:
-            type: object
-            properties:
-              success:
-                type: boolean
+            $ref: "../../schemas.yml#/errorSchema"
+    "500":
+      $ref: "../../responses.yml#/500"
     "403":
       $ref: "../../responses.yml#/403"
     "401":
