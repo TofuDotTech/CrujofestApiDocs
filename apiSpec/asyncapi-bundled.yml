@@ -55,6 +55,7 @@ channels:
             x-ack:
               message:
                 type: string
+                description: repeated_song or success
           - description: Get queue
             name: getQueue
             title: getQueue
