@@ -124,7 +124,7 @@ paths:
                       refreshToken:
                         description: spotify refresh toekn required for spotify registration request
                         type: string
-                      expiresIn:
+                      spotifyExpiresIn:
                         description: spotify expiration in seconds required for spotify registration request
                         type: number
                   - type: object
