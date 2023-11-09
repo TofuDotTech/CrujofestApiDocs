@@ -36,6 +36,8 @@ get:
                     type: number
                   spotifyUserId:
                     type: string
+                  color:
+                    type: string
     "500":
       $ref: "../../responses.yml#/500"
     "403":

@@ -39,5 +39,8 @@ get:
                   isGuest:
                     type: boolean
                     description: Is a temporal user just for a party
+                  color:
+                    type: string
+                    description: Profile color
     "500":
       $ref: "../../responses.yml#/500"

@@ -638,6 +638,9 @@ paths:
                       isGuest:
                         type: boolean
                         description: Is a temporal user just for a party
+                      color:
+                        type: string
+                        description: Profile color
         '404':
           description: not_found - User not found
           content:
@@ -1040,6 +1043,8 @@ paths:
                       source:
                         type: number
                       spotifyUserId:
+                        type: string
+                      color:
                         type: string
         '401':
           $ref: '#/components/responses/401'
