@@ -450,6 +450,8 @@ paths:
                   queuePointer:
                     type: number
                     description: Pointer to the current song in the queue
+        '400':
+          $ref: '#/components/responses/400'
         '403':
           description: |
             not_in_party - User is not in a party
@@ -479,6 +481,8 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
         '403':
           description: |
             not_in_party - User is not in a party

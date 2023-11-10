@@ -40,6 +40,8 @@ post:
                 description: Pointer to the current song in the queue
     "500":
       $ref: "../../responses.yml#/500"
+    "400":
+      $ref: "../../responses.yml#/400"
 patch:
   summary: Notify the server that the currently playing song was paused or
     resumed
@@ -71,3 +73,5 @@ patch:
       $ref: "../../responses.yml#/204"
     "500":
       $ref: "../../responses.yml#/500"
+    "400":
+      $ref: "../../responses.yml#/400"
