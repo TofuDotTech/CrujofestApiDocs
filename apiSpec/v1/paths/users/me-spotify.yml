@@ -20,6 +20,8 @@ patch:
               description: Valid redirect uri depending on where the client is
                 authenticating
   responses:
+    "400":
+      $ref: "../../responses.yml#/400"
     "403":
       description: user_not_classic - Can't connect spotify account if user is
         not classic

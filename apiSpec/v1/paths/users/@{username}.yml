@@ -6,6 +6,8 @@ get:
   tags:
     - Users
   responses:
+    "400":
+      $ref: "../../responses.yml#/400"
     "404":
       description: not_found - User not found
       content:

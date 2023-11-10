@@ -63,12 +63,26 @@ delete:
           - "false"
   responses:
     "400":
-      description: deletePlaylist_not_provided - Trying to delete party but no
+      description: |
+        deletePlaylist_not_provided - Trying to delete party but no
         deletePlaylist param provided
+        invalid_body
+        invalid_fields
       content:
         application/json:
           schema:
-            $ref: "../../schemas.yml#/errorSchema"
+            oneOf:
+              - $ref: "../../schemas.yml#/errorSchema"
+              - type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+                  fields:
+                    type: array
+                    items:
+                      type: string
     "409":
       description: not_in_party - User is not in a party
       content:
@@ -106,6 +120,8 @@ patch:
             partyCode:
               type: string
   responses:
+    "400":
+      $ref: "../../responses.yml#/400"
     "409":
       description: in_party - User is in a party
       content:

@@ -18,7 +18,7 @@ post:
               description: valid redirect uri depending on where the
                 client is authenticating
   responses:
-    "400":
+    "409":
       description: "spotify_no_email: Spotify user has no email"
       content:
         application/json:
@@ -69,3 +69,5 @@ post:
                     description: Token expiration time
     "500":
       $ref: "../../responses.yml#/500"
+    "400":
+      $ref: "../../responses.yml#/400"

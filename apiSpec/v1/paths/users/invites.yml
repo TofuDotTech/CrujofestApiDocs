@@ -17,6 +17,8 @@ post:
               type: string
               description: email to send invitation
   responses:
+    "400":
+      $ref: "../../responses.yml#/400"
     "429":
       description: invitations_limit_reached - The number of invites allowed by
         this user has already been reached

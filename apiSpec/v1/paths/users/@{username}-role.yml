@@ -18,6 +18,8 @@ patch:
               type: number
               description: new role for user
   responses:
+    "400":
+      $ref: "../../responses.yml#/400"
     "403":
       description: |
         not_correct_role - User does not have the correct role

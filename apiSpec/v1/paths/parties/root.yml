@@ -20,6 +20,8 @@ post:
               type: number
               description: Id from choosed theme
   responses:
+    "400":
+      $ref: "../../responses.yml#/400"
     "409":
       description: |
         "in_party: User is in a party

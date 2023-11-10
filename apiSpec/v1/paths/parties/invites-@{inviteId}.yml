@@ -32,3 +32,5 @@ patch:
       $ref: "../../responses.yml#/403withGuest"
     "401":
       $ref: "../../responses.yml#/401"
+    "400":
+      $ref: "../../responses.yml#/400"

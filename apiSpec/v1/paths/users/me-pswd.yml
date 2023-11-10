@@ -17,6 +17,8 @@ patch:
             newPasssword:
               type: string
   responses:
+    "400":
+      $ref: "../../responses.yml#/400"
     "409":
       description: user_not_classic - User was not registered with username and
         password

@@ -29,3 +29,5 @@ post:
             $ref: "../../schemas.yml#/loggedSchema"
     "500":
       $ref: "../../responses.yml#/500"
+    "400":
+      $ref: "../../responses.yml#/400"

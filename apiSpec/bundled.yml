@@ -29,6 +29,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loggedSchema'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           description: 'unauthorized: Incorrect password or username'
           content:
@@ -71,6 +73,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loggedSchema'
+        '400':
+          $ref: '#/components/responses/400'
         '404':
           description: invite_not_found - BETA ONLY. Invite not found"
           content:
@@ -143,13 +147,15 @@ paths:
                           - 15d
                         description: Token expiration time
         '400':
-          description: 'spotify_no_email: Spotify user has no email'
+          $ref: '#/components/responses/400'
+        '404':
+          description: Not invited to Crujofest (only in beta). invite_not_found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/errorSchema'
-        '404':
-          description: Not invited to Crujofest (only in beta). invite_not_found
+        '409':
+          description: 'spotify_no_email: Spotify user has no email'
           content:
             application/json:
               schema:
@@ -191,6 +197,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loggedSchema'
+        '400':
+          $ref: '#/components/responses/400'
         '409':
           description: username_exists
           content:
@@ -216,6 +224,8 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -344,6 +354,8 @@ paths:
                   playlistId:
                     type: string
                     description: Spotify playlist id associated with the party
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -564,6 +576,8 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -594,6 +608,8 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
         '404':
           description: user_not_found - User with that email not found
           content:
@@ -641,6 +657,8 @@ paths:
                       color:
                         type: string
                         description: Profile color
+        '400':
+          $ref: '#/components/responses/400'
         '404':
           description: not_found - User not found
           content:
@@ -673,6 +691,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loggedSchema'
+        '400':
+          $ref: '#/components/responses/400'
         '404':
           description: party_not_found - Party not found
           content:
@@ -703,6 +723,8 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
         '404':
           description: user_not_found - User not found
           content:
@@ -816,11 +838,26 @@ paths:
         '204':
           $ref: '#/components/responses/204'
         '400':
-          description: deletePlaylist_not_provided - Trying to delete party but no deletePlaylist param provided
+          description: |
+            deletePlaylist_not_provided - Trying to delete party but no
+            deletePlaylist param provided
+            invalid_body
+            invalid_fields
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorSchema'
+                oneOf:
+                  - $ref: '#/components/schemas/errorSchema'
+                  - type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      fields:
+                        type: array
+                        items:
+                          type: string
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -858,6 +895,8 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -896,6 +935,8 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -924,6 +965,8 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -967,6 +1010,8 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1076,6 +1121,8 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1098,6 +1145,8 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1152,6 +1201,8 @@ paths:
                           type: string
                         spotifyUserId:
                           type: string
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -1232,6 +1283,8 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           description: unauthorized - unauthorized
           content:
@@ -1258,6 +1311,8 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
         '401':
           description: unauthorized - unauthorized
           content:
@@ -1385,6 +1440,31 @@ components:
           schema:
             type: string
             example: OK
+    '400':
+      description: |
+        Fields are incorrect
+        invalid_fields - an individual field failed
+        invalid_body - the body as object failed, example is null
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+              - type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+                  fields:
+                    type: array
+                    items:
+                      type: string
     '401':
       description: Unauthorized
       content:

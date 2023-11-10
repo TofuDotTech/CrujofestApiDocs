@@ -12,6 +12,8 @@ get:
   security:
     - BearerAuth: []
   responses:
+    "400":
+      $ref: "../../responses.yml#/400"
     "200":
       description: Successful request
       content:

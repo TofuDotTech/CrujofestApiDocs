@@ -6,6 +6,8 @@ patch:
   tags:
     - Users
   responses:
+    "400":
+      $ref: "../../responses.yml#/400"
     "404":
       description: user_not_found - User with that email not found
       content:

@@ -45,3 +45,28 @@
     application/json:
       schema:
         $ref: "./schemas.yml#/errorSchema"
+"400":
+  description: |
+    Fields are incorrect
+    invalid_fields - an individual field failed
+    invalid_body - the body as object failed, example is null
+  content:
+    application/json:
+      schema:
+        oneOf:
+          - type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+          - type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              fields:
+                type: array
+                items:
+                  type: string

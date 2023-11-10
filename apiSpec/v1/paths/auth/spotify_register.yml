@@ -26,6 +26,8 @@ post:
             expiresIn:
               type: number
   responses:
+    "400":
+      $ref: "../../responses.yml#/400"
     "409":
       description: username_exists
       content:

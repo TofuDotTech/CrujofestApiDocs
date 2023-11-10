@@ -66,6 +66,8 @@ patch:
               type: string
               description: YYYY-MM-DD
   responses:
+    "400":
+      $ref: "../../responses.yml#/400"
     "204":
       $ref: "../../responses.yml#/204"
     "500":
@@ -88,6 +90,8 @@ delete:
       schema:
         type: string
   responses:
+    "400":
+      $ref: "../../responses.yml#/400"
     "403":
       description: |
         password_incorrect - password is incorrect
