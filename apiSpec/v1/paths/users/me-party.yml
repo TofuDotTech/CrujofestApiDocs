@@ -90,7 +90,7 @@ delete:
           schema:
             $ref: "../../schemas.yml#/errorSchema"
     "404":
-      description: not_found - Party not found
+      description: party_not_found - Party not found
       content:
         application/json:
           schema:

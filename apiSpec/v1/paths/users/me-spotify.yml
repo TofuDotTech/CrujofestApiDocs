@@ -54,7 +54,7 @@ delete:
     - BearerAuth: []
   responses:
     "403":
-      description: errror_logout - User does not have source 0 (classic) or does
+      description: error_logout - User does not have source 0 (classic) or does
         not have a connected spotify account
         spotify_access_revoked
         user_is_guest

@@ -19,7 +19,7 @@ patch:
           schema:
             $ref: "../../schemas.yml#/errorSchema"
     "404":
-      description: invite_not_found - Party invite not found
+      description: party_invite_not_found - Party invite not found
       content:
         application/json:
           schema:

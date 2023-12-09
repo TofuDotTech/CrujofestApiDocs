@@ -231,7 +231,7 @@ paths:
         '403':
           $ref: '#/components/responses/403withGuest'
         '404':
-          description: invite_not_found - Party invite not found
+          description: party_invite_not_found - Party invite not found
           content:
             application/json:
               schema:
@@ -664,7 +664,7 @@ paths:
         '400':
           $ref: '#/components/responses/400'
         '404':
-          description: not_found - User not found
+          description: user_not_found - User not found
           content:
             application/json:
               schema:
@@ -867,7 +867,7 @@ paths:
         '403':
           $ref: '#/components/responses/403'
         '404':
-          description: not_found - Party not found
+          description: party_not_found - Party not found
           content:
             application/json:
               schema:
@@ -1047,7 +1047,7 @@ paths:
         '401':
           $ref: '#/components/responses/401'
         '403':
-          description: errror_logout - User does not have source 0 (classic) or does not have a connected spotify account spotify_access_revoked user_is_guest
+          description: error_logout - User does not have source 0 (classic) or does not have a connected spotify account spotify_access_revoked user_is_guest
           content:
             application/json:
               schema:
