@@ -29,7 +29,7 @@ post:
     "400":
       $ref: "../../responses.yml#/400"
     "409":
-      description: username_exists
+      description: username_exists or email_exists or spotify_user_no_email
       content:
         application/json:
           schema:

@@ -82,7 +82,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/errorSchema'
         '409':
-          description: username_exists
+          description: username_exists or email_exists
           content:
             application/json:
               schema:
@@ -200,7 +200,7 @@ paths:
         '400':
           $ref: '#/components/responses/400'
         '409':
-          description: username_exists
+          description: username_exists or email_exists or spotify_user_no_email
           content:
             application/json:
               schema:
