@@ -32,6 +32,8 @@ get:
                       nullable: true
                     isGuest:
                       type: boolean
+                    color:
+                      type: string
     "409":
       description: not_in_party - User is not in a party
       content:

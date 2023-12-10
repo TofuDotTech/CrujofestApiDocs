@@ -405,6 +405,8 @@ paths:
                           nullable: true
                         isGuest:
                           type: boolean
+                        color:
+                          type: string
         '401':
           $ref: '#/components/responses/401'
         '403':
