@@ -55,7 +55,7 @@ channels:
             x-ack:
               message:
                 type: string
-                description: repeated_song, success or invalid_fields
+                description: repeated_song, success, something_went_wrong or invalid_fields
           - description: Get queue
             name: getQueue
             title: getQueue
