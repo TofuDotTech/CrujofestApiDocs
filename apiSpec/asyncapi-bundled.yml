@@ -200,6 +200,8 @@ channels:
                   nullable: true
                 isGuest:
                   type: boolean
+                color:
+                  type: string
           - name: deleteUser
             title: deleteUser
             description: Delete user from party users list

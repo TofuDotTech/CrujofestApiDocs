@@ -91,7 +91,31 @@ delete:
         type: string
   responses:
     "400":
-      $ref: "../../responses.yml#/400"
+      description: |
+        Fields are incorrect
+        invalid_fields - an individual field failed
+        invalid_body - the body as object failed, example is null
+        no_password - User is classic and no password was provided
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+              - type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+                  fields:
+                    type: array
+                    items:
+                      type: string
     "403":
       description: |
         password_incorrect - password is incorrect

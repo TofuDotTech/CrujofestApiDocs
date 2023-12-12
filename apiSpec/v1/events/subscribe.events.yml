@@ -43,6 +43,8 @@ addUser:
         nullable: true
       isGuest:
         type: boolean
+      color:
+        type: string
 deleteUser:
   name: deleteUser
   title: deleteUser
