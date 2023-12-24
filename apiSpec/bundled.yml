@@ -531,6 +531,12 @@ paths:
           $ref: '#/components/responses/204'
         '400':
           $ref: '#/components/responses/400'
+        '404':
+          description: no_song_found - Could not fetch any song with that query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
         '409':
           description: repeated_song - Song is already in queue
           content:

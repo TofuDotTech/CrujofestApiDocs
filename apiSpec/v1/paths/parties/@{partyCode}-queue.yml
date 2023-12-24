@@ -28,5 +28,11 @@ post:
         application/json:
           schema:
             $ref: "../../schemas.yml#/errorSchema"
+    "404":
+      description: no_song_found - Could not fetch any song with that query
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/errorSchema"
     "204":
       $ref: "../../responses.yml#/204"
