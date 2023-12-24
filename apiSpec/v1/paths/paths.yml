@@ -19,6 +19,8 @@
   $ref: ./parties/@{partyCode}-users.yml
 /parties/{partyCode}/current_song:
   $ref: ./parties/@{partyCode}-current_song.yml
+/parties/{partyCode}/queue:
+  $ref: ./parties/@{partyCode}-queue.yml
 
 # Roles
 /roles:

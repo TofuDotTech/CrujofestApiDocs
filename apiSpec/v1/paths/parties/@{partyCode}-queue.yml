@@ -1,0 +1,32 @@
+parameters:
+  - $ref: "../../parameters.yml#/partyCodeParam"
+post:
+  summary: Query song in the queue
+  description: Query song in the queue
+  tags:
+    - Parties
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            query:
+              type: string
+              description: Query used to fetch song
+  responses:
+    "500":
+      $ref: "../../responses.yml#/500"
+    "400":
+      $ref: "../../responses.yml#/400"
+    "409":
+      description: repeated_song - Song is already in queue
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/errorSchema"
+    "204":
+      $ref: "../../responses.yml#/204"

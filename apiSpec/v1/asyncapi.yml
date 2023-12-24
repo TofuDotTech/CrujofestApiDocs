@@ -19,7 +19,6 @@ channels:
           - $ref: ./events/publish.events.yml#/next
           - $ref: ./events/publish.events.yml#/previous
           - $ref: ./events/publish.events.yml#/currentSong
-          - $ref: ./events/publish.events.yml#/querySong
           - $ref: ./events/publish.events.yml#/getQueue
     subscribe:
       description: Server to client events

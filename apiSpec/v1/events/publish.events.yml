@@ -21,17 +21,6 @@ previous:
   description: Play the previous song in the queue
   name: previous
   title: previous
-querySong:
-  description: Add a song to the queue
-  name: querySong
-  title: querySong
-  payload:
-    type: string
-    description: query
-  x-ack:
-    message:
-      type: string
-      description: repeated_song, success, something_went_wrong or invalid_fields
 currentSong:
   description: Get current song playing. Returns null if no song is playing
   name: currentSong

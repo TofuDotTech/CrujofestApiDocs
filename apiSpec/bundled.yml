@@ -457,13 +457,23 @@ paths:
         '403':
           description: |
             not_in_party - User is not in a party
-            user_not_host - User is not the host of the party
+            spotify_access_revoked - User possibly revoked crujofest access to spotify
+            user_not_host - User is not host
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/errorSchema'
         '500':
-          $ref: '#/components/responses/500'
+          description: |
+            internal_error - Something went wrong. Try again later
+            has_finished - The queue has finished and wont accept more requests
+            pointer_casting_error - Could not cast pointer to int
+            null_song - Could not fetch the currently playing song
+            pointer_error - Something went wrong when calculating the new pointer value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
     patch:
       summary: Notify the server that the currently playing song was paused or resumed
       description: Notify the server that the currently playing song was paused or resumed
@@ -488,7 +498,41 @@ paths:
         '403':
           description: |
             not_in_party - User is not in a party
-            user_not_host - User is not the host of the party
+            spotify_access_revoked - User possibly revoked crujofest access to spotify
+            user_not_host - User is not host
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
+  /parties/{partyCode}/queue:
+    parameters:
+      - $ref: '#/components/parameters/partyCodeParam'
+    post:
+      summary: Query song in the queue
+      description: Query song in the queue
+      tags:
+        - Parties
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: Query used to fetch song
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
+        '409':
+          description: repeated_song - Song is already in queue
           content:
             application/json:
               schema:

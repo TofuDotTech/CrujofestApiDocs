@@ -21,7 +21,8 @@ post:
     "403":
       description: |
         not_in_party - User is not in a party
-        user_not_host - User is not the host of the party
+        spotify_access_revoked - User possibly revoked crujofest access to spotify
+        user_not_host - User is not host
       content:
         application/json:
           schema:
@@ -39,7 +40,16 @@ post:
                 type: number
                 description: Pointer to the current song in the queue
     "500":
-      $ref: "../../responses.yml#/500"
+      description: |
+        internal_error - Something went wrong. Try again later
+        has_finished - The queue has finished and wont accept more requests
+        pointer_casting_error - Could not cast pointer to int
+        null_song - Could not fetch the currently playing song
+        pointer_error - Something went wrong when calculating the new pointer value
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/errorSchema"
     "400":
       $ref: "../../responses.yml#/400"
 patch:
@@ -64,7 +74,8 @@ patch:
     "403":
       description: |
         not_in_party - User is not in a party
-        user_not_host - User is not the host of the party
+        spotify_access_revoked - User possibly revoked crujofest access to spotify
+        user_not_host - User is not host
       content:
         application/json:
           schema:

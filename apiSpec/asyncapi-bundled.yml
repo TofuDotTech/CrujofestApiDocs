@@ -46,16 +46,6 @@ channels:
                     nullable: true
                     $ref: >-
                       #/channels/~1/subscribe/message/oneOf/1/payload/oneOf/0/properties/song
-          - description: Add a song to the queue
-            name: querySong
-            title: querySong
-            payload:
-              type: string
-              description: query
-            x-ack:
-              message:
-                type: string
-                description: repeated_song, success, something_went_wrong or invalid_fields
           - description: Get queue
             name: getQueue
             title: getQueue
