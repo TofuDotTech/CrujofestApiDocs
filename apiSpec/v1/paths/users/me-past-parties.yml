@@ -1,0 +1,37 @@
+get:
+  summary: Returns all past parties the user has joined
+  description: Supports guest users. Returns all past parties the user has joined
+  tags:
+    - Users
+  security:
+    - BearerAuth: []
+  responses:
+    "500":
+      $ref: "../../responses.yml#/500"
+    "401":
+      $ref: "../../responses.yml#/401"
+    "403":
+      $ref: "../../responses.yml#/403withGuest"
+    "200":
+      description: Past parties
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                partyCode:
+                  type: string
+                partyName:
+                  type: string
+                partyPlaylistId:
+                  type: string
+                initialDate:
+                  type: string
+                finalDate:
+                  type: string
+                themeId:
+                  type: number

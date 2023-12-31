@@ -21,6 +21,8 @@
   $ref: ./parties/@{partyCode}-current_song.yml
 /parties/{partyCode}/queue:
   $ref: ./parties/@{partyCode}-queue.yml
+/parties/{id}:
+  $ref: ./parties/@{id}.yml
 
 # Roles
 /roles:
@@ -61,6 +63,8 @@
   $ref: ./users/me-token.yml
 /users/account/password:
   $ref: ./users/account-password.yml
+/users/me/past-parties:
+  $ref: ./users/me-past-parties.yml
 
 # Misc
 /password-reset:

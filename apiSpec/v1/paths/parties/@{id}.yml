@@ -1,0 +1,67 @@
+parameters:
+  - name: id
+    in: path
+    required: true
+    schema:
+      type: string
+get:
+  summary: Returns past party
+  description: Supports guest users. Returns past party
+  tags:
+    - Parties
+  security:
+    - BearerAuth: []
+  responses:
+    "500":
+      $ref: "../../responses.yml#/500"
+    "401":
+      $ref: "../../responses.yml#/401"
+    "403":
+      $ref: "../../responses.yml#/403withGuest"
+    "404":
+      description: |
+        party_not_found - Party not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/errorSchema"
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+              partyCode:
+                type: string
+              partyName:
+                type: string
+              partyPlaylistId:
+                type: string
+              initialDate:
+                type: string
+              finalDate:
+                type: string
+              themeId:
+                type: number
+              pastPartyUsers:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    wasHost:
+                      type: boolean
+                    user:
+                      type: object
+                      properties:
+                        username:
+                          type: string
+                        displayName:
+                          type: string
+                        photo:
+                          type: string
+                          nullable: true
+                        color:
+                          type: string

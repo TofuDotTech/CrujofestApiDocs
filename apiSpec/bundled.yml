@@ -545,6 +545,74 @@ paths:
                 $ref: '#/components/schemas/errorSchema'
         '500':
           $ref: '#/components/responses/500'
+  /parties/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Returns past party
+      description: Supports guest users. Returns past party
+      tags:
+        - Parties
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  partyCode:
+                    type: string
+                  partyName:
+                    type: string
+                  partyPlaylistId:
+                    type: string
+                  initialDate:
+                    type: string
+                  finalDate:
+                    type: string
+                  themeId:
+                    type: number
+                  pastPartyUsers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        wasHost:
+                          type: boolean
+                        user:
+                          type: object
+                          properties:
+                            username:
+                              type: string
+                            displayName:
+                              type: string
+                            photo:
+                              type: string
+                              nullable: true
+                            color:
+                              type: string
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403withGuest'
+        '404':
+          description: |
+            party_not_found - Party not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
   /roles:
     description: Requires authentication
     get:
@@ -1371,6 +1439,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
+  /users/me/past-parties:
+    get:
+      summary: Returns all past parties the user has joined
+      description: Supports guest users. Returns all past parties the user has joined
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Past parties
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    partyCode:
+                      type: string
+                    partyName:
+                      type: string
+                    partyPlaylistId:
+                      type: string
+                    initialDate:
+                      type: string
+                    finalDate:
+                      type: string
+                    themeId:
+                      type: number
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403withGuest'
         '500':
           $ref: '#/components/responses/500'
   /password-reset:
