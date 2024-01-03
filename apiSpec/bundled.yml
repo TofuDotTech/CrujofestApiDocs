@@ -4,6 +4,7 @@ info:
   version: 1.0.0
 servers:
   - url: https://crujofest.party/api/v1
+  - url: http://dev.crujofest.party/api/v1
 paths:
   /auth/login:
     post:
