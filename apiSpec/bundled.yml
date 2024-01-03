@@ -924,12 +924,11 @@ paths:
                             type: string
                           partyName:
                             type: string
-                          initialDate:
-                            type: string
-                            description: YYYY-MM-DD
                           themeId:
                             type: number
                           partyPlaylistId:
+                            type: string
+                          pastPartyId:
                             type: string
         '401':
           $ref: '#/components/responses/401'
