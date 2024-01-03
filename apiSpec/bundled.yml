@@ -554,7 +554,7 @@ paths:
           type: string
     get:
       summary: Returns past party
-      description: Supports guest users. Returns past party
+      description: Returns past party
       tags:
         - Parties
       security:
@@ -1444,11 +1444,24 @@ paths:
   /users/me/past-parties:
     get:
       summary: Returns all past parties the user has joined
-      description: Supports guest users. Returns all past parties the user has joined
+      description: Returns all past parties the user has joined
       tags:
         - Users
       security:
         - BearerAuth: []
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+            description: last past party id
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+            description: How many records to fetch, no more than 10
       responses:
         '200':
           description: Past parties

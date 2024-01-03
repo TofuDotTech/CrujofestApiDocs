@@ -6,7 +6,7 @@ parameters:
       type: string
 get:
   summary: Returns past party
-  description: Supports guest users. Returns past party
+  description: Returns past party
   tags:
     - Parties
   security:
