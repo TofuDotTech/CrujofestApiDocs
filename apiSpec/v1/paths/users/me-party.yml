@@ -24,6 +24,8 @@ get:
                 properties:
                   roleId:
                     type: number
+                  spotifyToken:
+                    type: string
                   currentParty:
                     type: object
                     properties:

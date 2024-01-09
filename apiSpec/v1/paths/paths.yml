@@ -65,6 +65,8 @@
   $ref: ./users/account-password.yml
 /users/me/past-parties:
   $ref: ./users/me-past-parties.yml
+/users/me/spotify-token:
+  $ref: ./users/me-spotify-token.yml
 
 # Misc
 /password-reset:

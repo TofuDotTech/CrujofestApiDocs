@@ -907,6 +907,8 @@ paths:
                     properties:
                       roleId:
                         type: number
+                      spotifyToken:
+                        type: string
                       currentParty:
                         type: object
                         properties:
@@ -1480,6 +1482,30 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403withGuest'
+        '500':
+          $ref: '#/components/responses/500'
+  /users/me/spotify-token:
+    get:
+      summary: Get spotify access token
+      description: Supports guest users. Gets the user's or host (if in party) spotify access token
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
         '500':
           $ref: '#/components/responses/500'
   /password-reset:

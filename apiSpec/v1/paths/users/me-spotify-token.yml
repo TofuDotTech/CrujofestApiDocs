@@ -1,0 +1,23 @@
+get:
+  summary: Get spotify access token
+  description: Supports guest users. Gets the user's or host (if in party) spotify access token
+  tags:
+    - Users
+  security:
+    - BearerAuth: []
+  responses:
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+    "500":
+      $ref: "../../responses.yml#/500"
+    "403":
+      $ref: "../../responses.yml#/403"
+    "401":
+      $ref: "../../responses.yml#/401"
