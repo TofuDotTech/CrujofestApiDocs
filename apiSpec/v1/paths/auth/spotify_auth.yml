@@ -18,18 +18,6 @@ post:
               description: valid redirect uri depending on where the
                 client is authenticating
   responses:
-    "409":
-      description: "spotify_no_email: Spotify user has no email"
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/errorSchema"
-    "404":
-      description: Not invited to Crujofest (only in beta). invite_not_found
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/errorSchema"
     "200":
       description: "Successful request. Codes: login, register"
       content:
@@ -54,6 +42,8 @@ post:
                     description: spotify expiration in seconds required for
                       spotify registration request
                     type: number
+                  askForEmail:
+                    type: boolean
               - type: object
                 properties:
                   code:

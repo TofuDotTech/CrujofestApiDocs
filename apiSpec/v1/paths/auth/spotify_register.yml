@@ -29,7 +29,17 @@ post:
     "400":
       $ref: "../../responses.yml#/400"
     "409":
-      description: username_exists or email_exists or spotify_user_no_email
+      description: |
+        username_exists or
+        email_exists or
+        spotify_user_no_email - Spotify user has no email and it was not
+        provided in the body
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/errorSchema"
+    "404":
+      description: Not invited to Crujofest (only in beta). invite_not_found
       content:
         application/json:
           schema:

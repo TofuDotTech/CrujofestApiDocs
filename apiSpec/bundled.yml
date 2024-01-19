@@ -132,6 +132,8 @@ paths:
                       spotifyExpiresIn:
                         description: spotify expiration in seconds required for spotify registration request
                         type: number
+                      askForEmail:
+                        type: boolean
                   - type: object
                     properties:
                       code:
@@ -149,18 +151,6 @@ paths:
                         description: Token expiration time
         '400':
           $ref: '#/components/responses/400'
-        '404':
-          description: Not invited to Crujofest (only in beta). invite_not_found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/errorSchema'
-        '409':
-          description: 'spotify_no_email: Spotify user has no email'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/errorSchema'
         '500':
           $ref: '#/components/responses/500'
   /auth/spotify_register:
@@ -200,8 +190,18 @@ paths:
                 $ref: '#/components/schemas/loggedSchema'
         '400':
           $ref: '#/components/responses/400'
+        '404':
+          description: Not invited to Crujofest (only in beta). invite_not_found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
         '409':
-          description: username_exists or email_exists or spotify_user_no_email
+          description: |
+            username_exists or
+            email_exists or
+            spotify_user_no_email - Spotify user has no email and it was not
+            provided in the body
           content:
             application/json:
               schema:
@@ -1485,38 +1485,42 @@ paths:
                     themeId:
                       type: number
                     pastPartyUsers:
-                      type: object
-                      properties:
-                        roleId:
-                          type: number
-                        user:
-                          type: object
-                          properties:
-                            displayName:
-                              type: string
-                            username:
-                              type: string
-                            photo:
-                              type: string
-                              nullable: true
-                            color:
-                              type: string
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          roleId:
+                            type: number
+                          user:
+                            type: object
+                            properties:
+                              displayName:
+                                type: string
+                              username:
+                                type: string
+                              photo:
+                                type: string
+                                nullable: true
+                              color:
+                                type: string
                     pastPartyGuestUsers:
-                      type: object
-                      properties:
-                        roleId:
-                          type: number
-                        color:
-                          type: string
-                        name:
-                          type: string
-                    _count:
-                      type: object
-                      properties:
-                        pastPartyUsers:
-                          type: number
-                        pastPartyGuestUsers:
-                          type: number
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          roleId:
+                            type: number
+                          color:
+                            type: string
+                          name:
+                            type: string
+                      _count:
+                        type: object
+                        properties:
+                          pastPartyUsers:
+                            type: number
+                          pastPartyGuestUsers:
+                            type: number
         '401':
           $ref: '#/components/responses/401'
         '403':
