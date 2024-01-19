@@ -49,35 +49,39 @@ get:
                 themeId:
                   type: number
                 pastPartyUsers:
-                  type: object
-                  properties:
-                    roleId:
-                      type: number
-                    user:
-                      type: object
-                      properties:
-                        displayName:
-                          type: string
-                        username:
-                          type: string
-                        photo:
-                          type: string
-                          nullable: true
-                        color:
-                          type: string
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      roleId:
+                        type: number
+                      user:
+                        type: object
+                        properties:
+                          displayName:
+                            type: string
+                          username:
+                            type: string
+                          photo:
+                            type: string
+                            nullable: true
+                          color:
+                            type: string
                 pastPartyGuestUsers:
-                  type: object
-                  properties:
-                    roleId:
-                      type: number
-                    color:
-                      type: string
-                    name:
-                      type: string
-                _count:
-                  type: object
-                  properties:
-                    pastPartyUsers:
-                      type: number
-                    pastPartyGuestUsers:
-                      type: number
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      roleId:
+                        type: number
+                      color:
+                        type: string
+                      name:
+                        type: string
+                  _count:
+                    type: object
+                    properties:
+                      pastPartyUsers:
+                        type: number
+                      pastPartyGuestUsers:
+                        type: number
