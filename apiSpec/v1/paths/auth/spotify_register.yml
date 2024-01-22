@@ -25,6 +25,9 @@ post:
               description: "YYYY-MM-DD"
             expiresIn:
               type: number
+            email:
+              type: string
+              nullable: true
   responses:
     "400":
       $ref: "../../responses.yml#/400"

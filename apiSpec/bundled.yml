@@ -181,6 +181,9 @@ paths:
                   description: YYYY-MM-DD
                 expiresIn:
                   type: number
+                email:
+                  type: string
+                  nullable: true
       responses:
         '200':
           description: Successful request
