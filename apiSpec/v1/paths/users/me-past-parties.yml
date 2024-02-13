@@ -78,10 +78,10 @@ get:
                         type: string
                       name:
                         type: string
-                  _count:
-                    type: object
-                    properties:
-                      pastPartyUsers:
-                        type: number
-                      pastPartyGuestUsers:
-                        type: number
+                _count:
+                  type: object
+                  properties:
+                    pastPartyUsers:
+                      type: number
+                    pastPartyGuestUsers:
+                      type: number
