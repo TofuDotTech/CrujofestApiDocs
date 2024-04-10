@@ -34,8 +34,6 @@ post:
           schema:
             type: object
             properties:
-              song:
-                $ref: ../../schemas.yml#/currentSongSchema
               queuePointer:
                 type: number
                 description: Pointer to the current song in the queue

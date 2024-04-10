@@ -451,8 +451,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  song:
-                    $ref: '#/components/schemas/currentSongSchema'
                   queuePointer:
                     type: number
                     description: Pointer to the current song in the queue
@@ -1604,6 +1602,32 @@ components:
         message:
           type: string
           description: error message
+    resultItemSchema:
+      type: object
+      properties:
+        artwork:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+              height:
+                type: number
+              width:
+                type: number
+        track:
+          type: string
+        artist:
+          type: string
+        duration:
+          type: number
+        url:
+          type: string
+        uri:
+          type: string
+        album:
+          type: string
     currentSongSchema:
       type: object
       properties:
@@ -1663,32 +1687,6 @@ components:
             transferring_playback:
               type: boolean
               nullable: true
-    resultItemSchema:
-      type: object
-      properties:
-        artwork:
-          type: array
-          items:
-            type: object
-            properties:
-              url:
-                type: string
-              height:
-                type: number
-              width:
-                type: number
-        track:
-          type: string
-        artist:
-          type: string
-        duration:
-          type: number
-        url:
-          type: string
-        uri:
-          type: string
-        album:
-          type: string
   securitySchemes:
     BearerAuth:
       type: http
