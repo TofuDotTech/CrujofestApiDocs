@@ -135,8 +135,26 @@ patch:
         application/json:
           schema:
             $ref: "../../schemas.yml#/errorSchema"
-    "204":
-      $ref: "../../responses.yml#/204"
+    "200":
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              party:
+                type: object
+                properties:
+                  partyCode:
+                    type: string
+                  partyName:
+                    type: string
+                  themeId:
+                    type: number
+                  partyPlaylistId:
+                    type: string
+                  pastPartyId:
+                    type: string
     "500":
       $ref: "../../responses.yml#/500"
     "403":

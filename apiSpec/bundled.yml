@@ -1016,8 +1016,26 @@ paths:
                 partyCode:
                   type: string
       responses:
-        '204':
-          $ref: '#/components/responses/204'
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  party:
+                    type: object
+                    properties:
+                      partyCode:
+                        type: string
+                      partyName:
+                        type: string
+                      themeId:
+                        type: number
+                      partyPlaylistId:
+                        type: string
+                      pastPartyId:
+                        type: string
         '400':
           $ref: '#/components/responses/400'
         '401':
