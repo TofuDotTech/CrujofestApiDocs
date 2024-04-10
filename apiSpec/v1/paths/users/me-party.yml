@@ -142,19 +142,26 @@ patch:
           schema:
             type: object
             properties:
-              party:
+              partyInfo:
                 type: object
                 properties:
-                  partyCode:
-                    type: string
-                  partyName:
-                    type: string
-                  themeId:
+                  roleId:
                     type: number
-                  partyPlaylistId:
+                  spotifyToken:
                     type: string
-                  pastPartyId:
-                    type: string
+                  currentParty:
+                    type: object
+                    properties:
+                      partyCode:
+                        type: string
+                      partyName:
+                        type: string
+                      themeId:
+                        type: number
+                      partyPlaylistId:
+                        type: string
+                      pastPartyId:
+                        type: string
     "500":
       $ref: "../../responses.yml#/500"
     "403":
