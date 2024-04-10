@@ -13,14 +13,6 @@ channels:
       description: Client to server events
       message:
         oneOf:
-          - description: >-
-              Leave the room associated to the party and disconnects the socket
-              connection
-            name: leaveParty
-            title: leaveParty
-            payload:
-              type: string
-              description: Party code
           - description: Resume the currently playing song
             name: play
             title: play

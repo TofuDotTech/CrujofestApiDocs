@@ -1,10 +1,3 @@
-leaveParty:
-  description: Leave the room associated to the party and disconnects the socket connection
-  name: leaveParty
-  title: leaveParty
-  payload:
-    type: string
-    description: Party code
 play:
   description: Resume the currently playing song
   name: play

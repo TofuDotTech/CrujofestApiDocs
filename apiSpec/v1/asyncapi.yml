@@ -13,7 +13,6 @@ channels:
       description: Client to server events
       message:
         oneOf:
-          - $ref: ./events/publish.events.yml#/leaveParty
           - $ref: ./events/publish.events.yml#/play
           - $ref: ./events/publish.events.yml#/pause
           - $ref: ./events/publish.events.yml#/next
