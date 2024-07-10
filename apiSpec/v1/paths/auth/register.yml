@@ -1,6 +1,6 @@
 post:
   summary: Registers a new user
-  description: Registers a new user
+  description: Registers a new user. User query string used for invitations
   tags:
     - Auth
   parameters:
