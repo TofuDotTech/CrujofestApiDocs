@@ -13,7 +13,7 @@ get:
           schema:
             type: object
             properties:
-              redeemed:
+              numberOfInvites:
                 type: number
     "500":
       $ref: "../../responses.yml#/500"

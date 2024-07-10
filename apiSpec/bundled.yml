@@ -46,6 +46,13 @@ paths:
       description: Registers a new user
       tags:
         - Auth
+      parameters:
+        - name: user
+          in: query
+          required: false
+          schema:
+            type: string
+            description: username of who invited
       requestBody:
         required: true
         content:
@@ -823,52 +830,6 @@ paths:
                 $ref: '#/components/schemas/errorSchema'
         '500':
           $ref: '#/components/responses/500'
-  /users/invites:
-    post:
-      summary: Sends an email invitation to register to Crujofest
-      description: Sends an email invitation to register to Crujofest
-      tags:
-        - Users
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                  description: Username of the user that sent the invitation url
-                email:
-                  type: string
-                  description: email to send invitation
-      responses:
-        '204':
-          $ref: '#/components/responses/204'
-        '400':
-          $ref: '#/components/responses/400'
-        '404':
-          description: user_not_found - User not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/errorSchema'
-        '409':
-          description: |
-            email_registered - There is already an account with this email
-            email_invited - This email has already been invited
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/errorSchema'
-        '429':
-          description: invitations_limit_reached - The number of invites allowed by this user has already been reached
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/errorSchema'
-        '500':
-          $ref: '#/components/responses/500'
   /users/me/invites:
     get:
       summary: Gets the number of invites redeemed
@@ -885,7 +846,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  redeemed:
+                  numberOfInvites:
                     type: number
         '401':
           $ref: '#/components/responses/401'

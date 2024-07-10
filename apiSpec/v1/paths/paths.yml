@@ -41,8 +41,6 @@
   $ref: ./users/@{username}.yml
 /users/guest/party:
   $ref: ./users/guest-party.yml
-/users/invites:
-  $ref: ./users/invites.yml
 /users/me/invites:
   $ref: ./users/me-invites.yml
 /users/me/party:
