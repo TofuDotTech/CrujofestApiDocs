@@ -65,7 +65,9 @@
   $ref: ./users/me-past-parties.yml
 /users/me/spotify-token:
   $ref: ./users/me-spotify-token.yml
-
-# Misc
-/password-reset:
-  $ref: ./password-reset.yml
+/users/account/password-reset:
+  $ref: ./users/account-password-reset.yml
+/users/account/data:
+  $ref: ./users/account-data.yml
+/users/account/deletion-request:
+  $ref: ./users/account-deletion_request.yml

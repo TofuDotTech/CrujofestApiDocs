@@ -1,6 +1,6 @@
 post:
-  summary: Sends an email to change user password
-  description: Sends an email to change user password
+  summary: Sends an email to delete all data linked to a user
+  description: Sends an email to delete all data linked to a user
   tags:
     - Users
   requestBody:

@@ -1401,7 +1401,7 @@ paths:
   /users/account/password:
     post:
       summary: Sends an email to change user password
-      description: Sends and email to change user password
+      description: Sends an email to change user password
       tags:
         - Users
       requestBody:
@@ -1418,12 +1418,6 @@ paths:
           $ref: '#/components/responses/204'
         '400':
           $ref: '#/components/responses/400'
-        '401':
-          description: unauthorized - unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/errorSchema'
         '500':
           $ref: '#/components/responses/500'
   /users/me/past-parties:
@@ -1538,7 +1532,7 @@ paths:
           $ref: '#/components/responses/403'
         '500':
           $ref: '#/components/responses/500'
-  /password-reset:
+  /users/account/password-reset:
     patch:
       summary: Resets user password
       description: Resets user password
@@ -1559,11 +1553,56 @@ paths:
         '400':
           $ref: '#/components/responses/400'
         '401':
-          description: unauthorized - unauthorized
+          description: unauthorized - The token expired or a user was not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
+  /users/account/data:
+    delete:
+      summary: Deletes all data linked to a user
+      description: Deletes all data linked to a user
+      parameters:
+        - name: token
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          description: unauthorized - The token expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorSchema'
+        '500':
+          $ref: '#/components/responses/500'
+  /users/account/deletion-request:
+    post:
+      summary: Sends an email to delete all data linked to a user
+      description: Sends an email to delete all data linked to a user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
         '500':
           $ref: '#/components/responses/500'
 components:

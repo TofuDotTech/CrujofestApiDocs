@@ -1,0 +1,22 @@
+delete:
+  summary: Deletes all data linked to a user
+  description: Deletes all data linked to a user
+  parameters:
+    - name: token
+      in: query
+      required: false
+      schema:
+        type: string
+  responses:
+    "400":
+      $ref: "../../responses.yml#/400"
+    "401":
+      description: unauthorized - The token expired
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas.yml#/errorSchema"
+    "204":
+      $ref: "../../responses.yml#/204"
+    "500":
+      $ref: "../../responses.yml#/500"
