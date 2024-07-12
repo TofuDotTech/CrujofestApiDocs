@@ -38,6 +38,8 @@ get:
                     type: string
                   spotifyUserId:
                     type: string
+                  spotifyDisplayName:
+                    type: string
                   isGuest:
                     type: boolean
                     description: Is a temporal user just for a party

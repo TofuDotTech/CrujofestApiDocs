@@ -40,6 +40,8 @@ get:
                       type: string
                     spotifyUserId:
                       type: string
+                    spotifyDisplayName:
+                      type: string
     "500":
       $ref: "../../responses.yml#/500"
     "403":

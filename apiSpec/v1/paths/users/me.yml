@@ -36,6 +36,8 @@ get:
                     type: number
                   spotifyUserId:
                     type: string
+                  spotifyDisplayName:
+                    type: string
                   color:
                     type: string
     "500":
