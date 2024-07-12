@@ -780,6 +780,9 @@ paths:
                         type: string
                       spotifyUserId:
                         type: string
+                      spotifyDisplayName:
+                        type: string
+                        description: Can be null, use id in that case
                       isGuest:
                         type: boolean
                         description: Is a temporal user just for a party
@@ -1198,6 +1201,9 @@ paths:
                         type: number
                       spotifyUserId:
                         type: string
+                      spotifyDisplayName:
+                        type: string
+                        description: Can be null, use id in that case
                       color:
                         type: string
         '401':
@@ -1334,6 +1340,9 @@ paths:
                           type: string
                         spotifyUserId:
                           type: string
+                        spotifyDisplayName:
+                          type: string
+                          description: Can be null, use id in that case
         '400':
           $ref: '#/components/responses/400'
         '401':

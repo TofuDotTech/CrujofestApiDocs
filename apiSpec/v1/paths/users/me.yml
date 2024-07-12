@@ -38,6 +38,7 @@ get:
                     type: string
                   spotifyDisplayName:
                     type: string
+                    description: Can be null, use id in that case
                   color:
                     type: string
     "500":

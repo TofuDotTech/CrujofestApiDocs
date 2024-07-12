@@ -40,6 +40,7 @@ get:
                     type: string
                   spotifyDisplayName:
                     type: string
+                    description: Can be null, use id in that case
                   isGuest:
                     type: boolean
                     description: Is a temporal user just for a party

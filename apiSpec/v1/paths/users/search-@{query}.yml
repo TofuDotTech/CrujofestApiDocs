@@ -42,6 +42,7 @@ get:
                       type: string
                     spotifyDisplayName:
                       type: string
+                      description: Can be null, use id in that case
     "500":
       $ref: "../../responses.yml#/500"
     "403":
