@@ -3,13 +3,6 @@ post:
   description: Authenticates a user with spotify for login and registration
   tags:
     - Auth
-  parameters:
-    - name: user
-      in: query
-      required: false
-      schema:
-        type: string
-        description: username of who invited
   requestBody:
     required: true
     content:
