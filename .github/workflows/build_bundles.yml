@@ -20,7 +20,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           #cache: "npm"
       - name: Bundle rest api
-        run: npx @redocly/cli@latest bundle ./apiSpec/$1/openapi.yml -o ./apiSpec/bundled.yml
+        run: npx @redocly/cli@latest bundle ./apiSpec/v1/openapi.yml -o ./apiSpec/bundled.yml
       - name: Bundle asyncapi
         run: cd apiSpec/v1 && npx @asyncapi/cli@latest bundle asyncapi.yml >../asyncapi-bundled.yml && cd ../..
       - name: Generate asyncapi docs
