@@ -48,12 +48,6 @@ post:
         application/json:
           schema:
             $ref: "../../schemas.yml#/errorSchema"
-    "404":
-      description: Not invited to Crujofest (only in beta). invite_not_found
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/errorSchema"
     "200":
       description: Successful request
       content:

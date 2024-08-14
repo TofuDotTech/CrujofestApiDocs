@@ -33,12 +33,6 @@ post:
               type: string
               description: "YYYY-MM-DD"
   responses:
-    "404":
-      description: invite_not_found - BETA ONLY. Invite not found"
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/errorSchema"
     "409":
       description: username_exists or email_exists
       content:
