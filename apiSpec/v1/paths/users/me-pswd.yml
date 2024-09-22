@@ -19,18 +19,13 @@ patch:
   responses:
     "400":
       $ref: "../../responses.yml#/400"
-    "409":
-      description: user_not_classic - User was not registered with username and
-        password
-      content:
-        application/json:
-          schema:
-            $ref: "../../schemas.yml#/errorSchema"
     "403":
       description: |
         password_incorrect - old password is incorrect
         spotify_access_revoked
         user_is_guest
+        user_not_classic - User was not registered with username and password
+
       content:
         application/json:
           schema:
