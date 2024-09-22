@@ -83,12 +83,6 @@ paths:
                 $ref: '#/components/schemas/loggedSchema'
         '400':
           $ref: '#/components/responses/400'
-        '404':
-          description: invite_not_found - BETA ONLY. Invite not found"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/errorSchema'
         '409':
           description: username_exists or email_exists
           content:
@@ -207,12 +201,6 @@ paths:
                 $ref: '#/components/schemas/loggedSchema'
         '400':
           $ref: '#/components/responses/400'
-        '404':
-          description: Not invited to Crujofest (only in beta). invite_not_found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/errorSchema'
         '409':
           description: |
             username_exists or
