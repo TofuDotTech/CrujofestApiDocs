@@ -470,10 +470,6 @@ paths:
         '500':
           description: |
             internal_error - Something went wrong. Try again later
-            has_finished - The queue has finished and wont accept more requests
-            pointer_casting_error - Could not cast pointer to int
-            null_song - Could not fetch the currently playing song
-            pointer_error - Something went wrong when calculating the new pointer value
           content:
             application/json:
               schema:
