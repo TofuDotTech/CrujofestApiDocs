@@ -1081,12 +1081,7 @@ paths:
             password_incorrect - old password is incorrect
             spotify_access_revoked
             user_is_guest
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/errorSchema'
-        '409':
-          description: user_not_classic - User was not registered with username and password
+            user_not_classic - User was not registered with username and password
           content:
             application/json:
               schema:
