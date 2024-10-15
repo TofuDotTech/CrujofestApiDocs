@@ -132,6 +132,8 @@ channels:
                           type: string
                         album:
                           type: string
+                        albumUrl:
+                          type: string
                   queuePointer:
                     type: number
     subscribe:
@@ -166,6 +168,8 @@ channels:
                 uri:
                   type: string
                 album:
+                  type: string
+                albumUrl:
                   type: string
           - name: changeSong
             title: changeSong
