@@ -102,3 +102,5 @@ resultItemSchema:
       type: string
     album:
       type: string
+    albumUrl:
+      type: string
