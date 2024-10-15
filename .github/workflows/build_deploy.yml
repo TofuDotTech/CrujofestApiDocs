@@ -37,21 +37,19 @@ jobs:
       - name: Bundle rest api
         run: npx @redocly/cli@latest bundle ./apiSpec/v1/openapi.yml -o ./apiSpec/bundled.yml
       - name: Bundle asyncapi
-        run: cd apiSpec/v1 && npx @asyncapi/cli@latest bundle asyncapi.yml >../asyncapi-bundled.yml && cd ../..
-      - name: List global packages
-        run: npm list -g
-      - name: List packages
-        run: npm list
+        uses: asyncapi/github-action-for-cli@v3.1.1
+        with:
+          custom_command: bundle ./apiSpec/v1/asyncapi.yaml --output ./apiScpec/asyncapi-bundled.yaml
       - name: Commit bundles
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: automated OpenAPI and AsyncAPI bundles
-      - name: Generate asyncapi docs
-        run: cd apiSpec/ && npx @asyncapi/cli@latest generate fromTemplate asyncapi-bundled.yml @asyncapi/html-template -o ../docs && cd ../
-      - name: Commit asyncapi docs
-        uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Generating HTML from my AsyncAPI document
+        uses: asyncapi/github-action-for-cli@v3.1.1
         with:
-          commit_message: automated AsyncAPI docs
+          template: "@asyncapi/html-template"
+          filepath: apiSpec/asyncapi-bundled.yml
+          output: docs
   deploy:
     needs: build
     environment:
