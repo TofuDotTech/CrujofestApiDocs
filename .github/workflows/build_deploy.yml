@@ -38,6 +38,10 @@ jobs:
         run: npx @redocly/cli@latest bundle ./apiSpec/v1/openapi.yml -o ./apiSpec/bundled.yml
       - name: Bundle asyncapi
         run: cd apiSpec/v1 && npx @asyncapi/cli@latest bundle asyncapi.yml >../asyncapi-bundled.yml && cd ../..
+      - name: List global packages
+        run: npm list -g
+      - name: List packages
+        run: npm list
       - name: Commit bundles
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
