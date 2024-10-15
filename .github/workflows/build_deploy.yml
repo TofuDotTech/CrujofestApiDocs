@@ -39,7 +39,7 @@ jobs:
       - name: Bundle asyncapi
         uses: asyncapi/github-action-for-cli@v3.1.1
         with:
-          custom_command: bundle ./apiSpec/v1/asyncapi.yaml --output ./apiScpec/asyncapi-bundled.yaml
+          custom_command: bundle ./apiSpec/v1/asyncapi.yml --output ./apiScpec/asyncapi-bundled.yml
       - name: Commit bundles
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
