@@ -46,8 +46,6 @@ jobs:
         run: cd apiSpec/ && npx @asyncapi/cli@latest generate fromTemplate asyncapi-bundled.yml @asyncapi/html-template -use-new-generator -o ../docs && cd ../
       - name: Commit asyncapi docs
         uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: automated AsyncAPI docs
   deploy:
     needs: build
     environment:
