@@ -37,7 +37,7 @@ jobs:
       - name: Bundle rest api
         run: npx @redocly/cli@latest bundle ./apiSpec/v1/openapi.yml -o ./apiSpec/bundled.yml
       - name: Bundle asyncapi
-        run: npx @asyncapi/cli asyncapi.yml --output ../asyncapi-bundled.yml --baseDir ./apiSpec/v1/
+        run: cd apiSpec/v1 && npx @asyncapi/cli@latest bundle asyncapi.yml >../asyncapi-bundled.yml && cd ../..
       - name: Commit bundles
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
