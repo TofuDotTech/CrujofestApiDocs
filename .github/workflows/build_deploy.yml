@@ -37,13 +37,13 @@ jobs:
       - name: Bundle rest api
         run: npx @redocly/cli@latest bundle ./apiSpec/v1/openapi.yml -o ./apiSpec/bundled.yml
       - name: Bundle asyncapi
-        run: cd apiSpec/v1 && npx @asyncapi/cli@latest bundle asyncapi.yml >../asyncapi-bundled.yml && cd ../..
+        run: npx @asyncapi/cli asyncapi.yml --output ../asyncapi-bundled.yml --baseDir ./apiSpec/v1/
       - name: Commit bundles
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: automated OpenAPI and AsyncAPI bundles
       - name: Generate asyncapi docs
-        run: cd apiSpec/ && npx @asyncapi/cli@latest generate fromTemplate asyncapi-bundled.yml @asyncapi/html-template -o ../docs && cd ../
+        run: cd apiSpec/ && npx @asyncapi/cli@latest generate fromTemplate asyncapi-bundled.yml @asyncapi/html-template -use-new-generator -o ../docs && cd ../
       - name: Commit asyncapi docs
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
