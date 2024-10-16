@@ -1648,6 +1648,8 @@ components:
           type: string
         album:
           type: string
+        albumUrl:
+          type: string
     currentSongSchema:
       type: object
       properties:
