@@ -22,6 +22,9 @@ concurrency:
 
 jobs:
   build:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -44,17 +47,6 @@ jobs:
           commit_message: automated OpenAPI and AsyncAPI bundles
       - name: Generate asyncapi docs
         run: cd apiSpec/ && npx @asyncapi/cli@latest generate fromTemplate asyncapi-bundled.yml @asyncapi/html-template --use-new-generator -o ../docs && cd ../
-      - name: Commit asyncapi docs
-        uses: stefanzweifel/git-auto-commit-action@v5
-  deploy:
-    needs: build
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
