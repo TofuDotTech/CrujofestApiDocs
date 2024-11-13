@@ -43,6 +43,8 @@ currentSongSchema:
       type: string
     url:
       type: string
+    albumUrl:
+      type: string
     disabledControls:
       type: object
       properties:
